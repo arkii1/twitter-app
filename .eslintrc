@@ -6,10 +6,12 @@
       "prettier"
     ],
     "plugins": [
+      "react",
       "jsx-a11y",
       "prettier"
     ],
     "rules": {
+      "react/require-default-props": 0,
       "semi": 0,
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "prettier/prettier": [
