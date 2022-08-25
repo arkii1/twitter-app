@@ -1,5 +1,21 @@
 :root {
-    --dark-gray: rgb(153,153,153);
-    --blue:rgb(29,155,240);
-    --light-gray: rgb(99,114,126);
+    --dark-gray: 153,153,153;
+    --blue: 29,155,240;
+    --light-gray: 99,114,126;
+    --black: 15,20,25;
+    --white : 255, 255, 255;
+
+    font-family: Arial, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    color: rgb(var(--blue));
+    text-decoration: none; 
+    transition: 0.1s;
+}
+
+a:hover {
+    color: rgb(var(--blue));
+    text-decoration:underline; 
+    transition: 0.1s;
 }
