@@ -1,0 +1,32 @@
+@import url("../index.css");
+
+.label-and-input--active {
+    border: solid 1px var(--blue);
+}
+
+.label-and-input--inactive {
+    border: solid 1px var(--light-gray);
+}
+
+
+.label-and-input__label--has-input {
+    transition: 0.1s;
+    pointer-events: none;
+    color: var(--light-gray)
+}
+
+.label-and-input__label--inactive {
+    transform:  scale(1.2) translate(1.2rem, 0.8rem);
+    transition: 0.1s;
+    pointer-events: none;
+    color: var(--light-gray);
+}
+
+.label-and-input__label--active {
+    transition: 0.1s;
+    color: var(--blue);
+}
+
+.label-and-input__input {
+    outline: none;
+}
