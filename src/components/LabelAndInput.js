@@ -33,7 +33,7 @@ function LabelAndInput({ labelText, forName, inputType }) {
 
   return (
     <div
-      className={`${divClass} d-flex flex-column rounded p-1`}
+      className={`${divClass} d-flex flex-column p-1`}
       onFocus={toggleActive}
       onBlur={toggleActive}
     >
