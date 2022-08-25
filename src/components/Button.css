@@ -1,0 +1,30 @@
+.button--light,
+.button--dark  {
+    width: 100%;
+    outline: none;
+    border-radius: 20px;
+    padding: 0.25rem;
+    transition: 0.1s;
+} 
+
+.button--dark {
+    border: none;
+    background-color: rgb(var(--black));
+    color: rgb(var(--white));
+}
+
+.button--light  {
+  border: 1px solid rgb(var(--light-gray));
+  background-color: rgb(var(--white));
+  columns: rgb(var(--black));
+}
+
+.button--light:hover  {
+    background-color: rgba(var(--black), 0.1);
+    transition: 0.1s;
+}
+
+.button--dark:hover  {
+    background-color: rgba(var(--black), 0.9);
+    transition: 0.1s;
+}
