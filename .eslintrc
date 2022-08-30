@@ -11,6 +11,7 @@
       "prettier"
     ],
     "rules": {
+      "no-plusplus": 0,
       "react/require-default-props": 0,
       "semi": 0,
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
