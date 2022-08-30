@@ -2,12 +2,10 @@
 
 .label-and-input--active {
     border: solid 1px rgb(var(--blue));
-    border-radius: 10px;
 }
 
 .label-and-input--inactive {
     border: solid 1px rgb(var(--light-gray));
-    border-radius: 10px;
 }
 
 
@@ -15,10 +13,13 @@
     transition: 0.1s;
     pointer-events: none;
     color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
 }
 
 .label-and-input__label--inactive {
-    transform:  scale(1.2) translate(1.2rem, 0.8rem);
+    transform:  translateY(1rem);
+    font-size: 1rem;
     transition: 0.1s;
     pointer-events: none;
     color: rgb(var(--light-gray));
@@ -27,6 +28,8 @@
 .label-and-input__label--active {
     transition: 0.1s;
     color: rgb(var(--blue));
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
 }
 
 .label-and-input__input {
