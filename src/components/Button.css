@@ -1,5 +1,6 @@
 .button--light,
-.button--dark  {
+.button--dark, 
+.button--blue  {
     width: 100%;
     outline: none;
     border-radius: 20px;
@@ -16,7 +17,13 @@
 .button--light  {
   border: 1px solid rgb(var(--light-gray));
   background-color: rgb(var(--white));
-  columns: rgb(var(--black));
+  color: rgb(var(--black));
+}
+
+.button--blue {
+    border: 1px solid rgb(var(--blue));
+    background-color: rgb(var(--blue));
+    color: rgb(var(--white));
 }
 
 .button--light:hover  {
@@ -26,5 +33,11 @@
 
 .button--dark:hover  {
     background-color: rgba(var(--black), 0.9);
+    transition: 0.1s;
+}
+
+.button--blue:hover  {
+    background-color: rgba(var(--blue), 0.9);
+    border: 1px solid rgba(var(--blue), 0.9);
     transition: 0.1s;
 }
