@@ -1,0 +1,28 @@
+@import url("../index.css");
+
+.option-select--active {
+    border: solid 1px rgb(var(--blue));
+}
+
+.option-select--inactive {
+    border: solid 1px rgb(var(--light-gray));
+}
+
+.option-select__label--inactive {
+    font-size: 0.7rem;
+    transition: 0.1s;
+    pointer-events: none;
+    color: rgb(var(--light-gray));
+}
+
+.option-select__label--active {
+    font-size: 0.7rem;
+    transition: 0.1s;
+    color: rgb(var(--blue));
+}
+
+.option-select__select {
+border: none;
+outline: none;
+background: none;
+}
