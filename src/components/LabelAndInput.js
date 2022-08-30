@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react"
 import "./LabelAndInput.css"
 import propTypes from "prop-types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useToggle from "../hooks/useToggle"
 
-function LabelAndInput({ labelText, forName, inputType }) {
+function LabelAndInput({ labelText, forName, inputType, onChange }) {
   const [active, toggleActive] = useToggle()
   const [divClass, setDivClass] = useState("label-and-input--inactive")
   const [labelClass, setLabelClass] = useState(
@@ -29,23 +31,57 @@ function LabelAndInput({ labelText, forName, inputType }) {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value)
+    onChange(e)
+  }
+
+  const [curInputType, setCurInputType] = useState(inputType)
+  const changeCurInputType = () => {
+    if (curInputType === "password") setCurInputType("text")
+    else setCurInputType("password")
   }
 
   return (
     <div
-      className={`${divClass} d-flex flex-column p-1`}
+      className={`${divClass} d-flex flex-column p-1 rounded w-100`}
       onFocus={toggleActive}
       onBlur={toggleActive}
     >
       <label className={labelClass} htmlFor={forName}>
         {labelText}
       </label>
-      <input
-        className="label-and-input__input border-0"
-        type={inputType}
-        name={forName}
-        onChange={handleInputChange}
-      />
+      {inputType !== "password" ? (
+        <input
+          className="label-and-input__input border-0 w-100"
+          type={inputType}
+          name={forName}
+          onChange={handleInputChange}
+        />
+      ) : (
+        <div className="d-flex justify-content-between">
+          {" "}
+          <input
+            className="label-and-input__input border-0 w-100"
+            type={curInputType}
+            name={forName}
+            onChange={handleInputChange}
+          />
+          {curInputType === "password" ? (
+            <FontAwesomeIcon
+              icon={faEye}
+              className="p-2"
+              onClick={changeCurInputType}
+              style={{ cursor: "pointer" }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faEyeSlash}
+              className="p-2"
+              onClick={changeCurInputType}
+              style={{ cursor: "pointer" }}
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -56,4 +92,5 @@ LabelAndInput.propTypes = {
   labelText: propTypes.string,
   forName: propTypes.string,
   inputType: propTypes.string,
+  onChange: propTypes.func,
 }
