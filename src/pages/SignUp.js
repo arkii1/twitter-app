@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from "react"
 import "./SignUp.css"
+import { Link } from "react-router-dom"
 import twitterAnim from "../assets/twitter-anim.gif"
 import Button from "../components/Button"
 import LabelAndInput from "../components/LabelAndInput"
@@ -14,12 +14,11 @@ function SignUp() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // eslint-disable-next-line consistent-return
   async function handleSubmit(e) {
     e.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
+      return setError("Passwords do not match.")
     }
 
     try {
@@ -27,19 +26,19 @@ function SignUp() {
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
     } catch (err) {
-      setError("Failed to create an account")
+      setError("Failed to create an account.")
       console.log(err)
     }
 
-    setLoading(false)
+    return setLoading(false)
   }
 
   return (
-    <div>
+    <div className="sign-up w-75 h-100 d-flex flex-column align-items-center justify-content-between">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
       <h1> Join Twitter today</h1>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      {error && <p className="form-error">{error}</p>}
+      <form onSubmit={handleSubmit} className="w-100 d-flex flex-column gap-2">
         <LabelAndInput
           labelText="Email"
           forName="email"
@@ -58,10 +57,18 @@ function SignUp() {
           inputType="password"
           inputRef={passwordConfirmRef}
         />
-        <Button type="submit" text="Submit" colours="dark" disabled={loading} />
+        <Button
+          type="submit"
+          text="Sign Up"
+          colours="dark"
+          disabled={loading}
+        />
       </form>
-      <span className="sign-up__has-account my-3">
-        Have an account already? <a href="/sign-in">Log in</a>
+      <span className="small my-3">
+        Have an account already?{" "}
+        <Link to="/modal/sign-in" className="react-link">
+          Sign in
+        </Link>
       </span>
     </div>
   )
