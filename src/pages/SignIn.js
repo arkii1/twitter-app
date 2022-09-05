@@ -1,6 +1,6 @@
 import React from "react"
 import "./SignIn.css"
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import LabelAndInput from "../components/LabelAndInput"
 import googleLogo from "../assets/google-logo.svg"
 import twitterAnim from "../assets/twitter-anim.gif"
@@ -8,7 +8,7 @@ import Button from "../components/Button"
 import { useAuth } from "../contexts/AuthContext"
 
 function SignIn() {
-  const { googleSignIn } = useAuth()
+  const { googleSignIn, currentUser } = useAuth()
 
   const handelGoogleSignIn = async () => {
     try {
@@ -17,7 +17,7 @@ function SignIn() {
       console.log(error)
     }
   }
-
+  if (currentUser) return <Navigate to="/account" />
   return (
     <div className="sign-in w-75 h-100 d-flex flex-column align-items-center justify-content-between">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
