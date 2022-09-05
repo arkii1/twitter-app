@@ -4,18 +4,34 @@
     --light-gray: 99,114,126;
     --black: 15,20,25;
     --white : 255, 255, 255;
+    --red: 249, 24, 128;
 
     font-family: Arial, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
 }
 
-a {
+body, #root {
+    height: 100vh;
+    width: 100vw;
+}
+
+.react-link {
     color: rgb(var(--blue));
     text-decoration: none; 
     transition: 0.1s;
 }
 
-a:hover {
+.react-link:hover {
     color: rgb(var(--blue));
     text-decoration:underline; 
     transition: 0.1s;
+}
+
+.small {
+    color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+}
+
+.form-error {
+    color: rgb(var(--red));
 }
