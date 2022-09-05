@@ -5,6 +5,7 @@ import "./App.css"
 import "./index.css"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
+import Modal from "./components/Modal"
 
 function App() {
   return (
@@ -12,8 +13,10 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="sign-in" element={<SignIn />} />
-            <Route path="sign-up" element={<SignUp />} />
+            <Route path="modal" element={<Modal />}>
+              <Route index path="sign-in" element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
