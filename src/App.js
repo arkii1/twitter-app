@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { AuthProvider } from "./contexts/AuthContext"
 import "./App.css"
 import "./index.css"
+import Modal from "./components/Modal"
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
-import Modal from "./components/Modal"
+import Protected from "./components/Protected"
+import Account from "./pages/Account"
 
 function App() {
   return (
@@ -17,6 +19,15 @@ function App() {
               <Route index path="sign-in" element={<SignIn />} />
               <Route path="sign-up" element={<SignUp />} />
             </Route>
+            <Route
+              index
+              path="account"
+              element={
+                <Protected>
+                  <Account />
+                </Protected>
+              }
+            />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
