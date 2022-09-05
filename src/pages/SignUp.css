@@ -1,12 +1,17 @@
 @import url("../index.css");
 
 .sign-up {
-    height: 60%;
-    width: 25%;
+    height: 60vh;
+    width: max(25vw, 20rem);
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+
+.sign-up > div 
+{
     border-radius: 8px;
 }
 
@@ -16,7 +21,9 @@
     left: 0;
 }
 
-.sign-up__has-account {
+.sign-up__has-account ,
+.sign-up__small-text{
     color: rgb(var(--light-gray));
     font-size: 0.8rem;
 }
+
