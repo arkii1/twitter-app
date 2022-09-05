@@ -2,10 +2,11 @@ import React from "react"
 import "./Button.css"
 import propTypes from "prop-types"
 
-function Button({ logo, text, colours, onClick }) {
+function Button({ logo, text, colours, onClick, type }) {
   return (
     <button
-      type="button"
+      // eslint-disable-next-line react/button-has-type
+      type={type}
       className={`button--${colours} d-flex gap-1 align-items-center justify-content-center w-100`}
       onClick={onClick}
     >
@@ -21,5 +22,6 @@ Button.propTypes = {
   logo: propTypes.node,
   text: propTypes.string.isRequired,
   colours: propTypes.string.isRequired,
-  onClick: propTypes.func, // make this required later
+  onClick: propTypes.func, // make this required later,
+  type: propTypes.string.isRequired,
 }
