@@ -2,7 +2,7 @@ import React from "react"
 import "./Button.css"
 import propTypes from "prop-types"
 
-function Button({ logo, text, colours, onClick, type }) {
+function Button({ logo, text, colours, onClick, type = "button" }) {
   return (
     <button
       // eslint-disable-next-line react/button-has-type
