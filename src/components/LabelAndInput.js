@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useToggle from "../hooks/useToggle"
 
-function LabelAndInput({ labelText, forName, inputType, onChange }) {
+function LabelAndInput({ labelText, forName, inputType, inputRef }) {
   const [active, toggleActive] = useToggle()
   const [divClass, setDivClass] = useState("label-and-input--inactive")
   const [labelClass, setLabelClass] = useState(
@@ -31,7 +31,6 @@ function LabelAndInput({ labelText, forName, inputType, onChange }) {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value)
-    onChange(e)
   }
 
   const [curInputType, setCurInputType] = useState(inputType)
@@ -51,6 +50,7 @@ function LabelAndInput({ labelText, forName, inputType, onChange }) {
       </label>
       {inputType !== "password" ? (
         <input
+          ref={inputRef}
           className="label-and-input__input border-0 w-100"
           type={inputType}
           name={forName}
@@ -60,6 +60,7 @@ function LabelAndInput({ labelText, forName, inputType, onChange }) {
         <div className="d-flex justify-content-between">
           {" "}
           <input
+            ref={inputRef}
             className="label-and-input__input border-0 w-100"
             type={curInputType}
             name={forName}
@@ -92,5 +93,6 @@ LabelAndInput.propTypes = {
   labelText: propTypes.string,
   forName: propTypes.string,
   inputType: propTypes.string,
-  onChange: propTypes.func,
+  // eslint-disable-next-line react/forbid-prop-types
+  inputRef: propTypes.object,
 }
