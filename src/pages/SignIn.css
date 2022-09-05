@@ -1,24 +1,5 @@
 @import url("../index.css");
 
 .sign-in {
-    height: 60%;
-    width: 25%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 8px;
-}
-
-.sign-in__x {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-
-.sign-in__no-account {
-    color: rgb(var(--light-gray));
-    font-size: 0.8rem;
-
 }
