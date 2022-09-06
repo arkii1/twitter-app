@@ -26,7 +26,9 @@ function SignUp() {
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
     } catch (err) {
-      setError("Failed to create an account.")
+      setError(
+        "Failed to create an account. Email either already exists or is not formatted correctly."
+      )
       console.log(err)
     }
 
@@ -35,9 +37,9 @@ function SignUp() {
 
   if (currentUser) return <Navigate to="/account" />
   return (
-    <div className="sign-up w-75 h-100 d-flex flex-column align-items-center justify-content-between">
+    <div className="sign-up p-3 rounded w-75 h-100 d-flex flex-column align-items-center justify-content-between">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
-      <h1> Join Twitter today</h1>
+      <h1 className="w-100"> Join Twitter today</h1>
       {error && <p className="form-error">{error}</p>}
       <form onSubmit={handleSubmit} className="w-100 d-flex flex-column gap-2">
         <LabelAndInput
