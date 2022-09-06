@@ -3,9 +3,8 @@
 .rounded-modal {
     position: fixed;
     height: min(35rem, 80vh);
-    width: min(30rem, 75vw);
+    width: min(35rem, 75vw);
     background-color: white;
-    border-radius: 8px;
     left: 50%;
     margin-top: 15vh;
     transform: translateX(-50%);
