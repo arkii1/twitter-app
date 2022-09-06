@@ -5,7 +5,7 @@ import uniqid from "uniqid"
 import "./OptionSelect.css"
 import useToggle from "../hooks/useToggle"
 
-function OptionSelect({ labelText, forName, selectId, options, onChange }) {
+function OptionSelect({ labelText, forName, options, inputRef }) {
   const [active, toggleActive] = useToggle()
   const [divClass, setDivClass] = useState("option-select--inactive")
   const [labelClass, setLabelClass] = useState("option-select--inactive")
@@ -42,10 +42,9 @@ function OptionSelect({ labelText, forName, selectId, options, onChange }) {
         name={forName}
         value={inputValue}
         className="option-select__select "
-        id={selectId}
+        ref={inputRef}
         onChange={(e) => {
           setInputValue(e.target.value)
-          onChange(e)
         }}
       >
         {optionsJSX}
@@ -59,7 +58,6 @@ export default OptionSelect
 OptionSelect.propTypes = {
   labelText: propTypes.string.isRequired,
   forName: propTypes.string.isRequired,
-  selectId: propTypes.string.isRequired,
+  inputRef: propTypes.object,
   options: propTypes.arrayOf(propTypes.string).isRequired,
-  onChange: propTypes.func.isRequired,
 }
