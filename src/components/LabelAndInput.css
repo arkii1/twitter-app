@@ -35,3 +35,11 @@
 .label-and-input__input {
     outline: none;
 }
+
+.label-and-input__char-count--inactive {
+    opacity: 0;
+}
+
+.label-and-input__char-count--active {
+    opacity: 1;
+}

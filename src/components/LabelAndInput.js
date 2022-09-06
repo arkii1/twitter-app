@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from "react"
 import "./LabelAndInput.css"
 import propTypes from "prop-types"
@@ -5,13 +6,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useToggle from "../hooks/useToggle"
 
-function LabelAndInput({ labelText, forName, inputType, inputRef }) {
+function LabelAndInput({
+  labelText,
+  forName,
+  inputType,
+  inputRef,
+  startValue,
+  textLimit,
+}) {
   const [active, toggleActive] = useToggle()
   const [divClass, setDivClass] = useState("label-and-input--inactive")
   const [labelClass, setLabelClass] = useState(
     "label-and-input__label--inactive"
   )
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(startValue || "")
+  const startChar = startValue ? startValue.length : 0
+  const [charCount, setCharCount] = useState(startChar)
 
   useEffect(() => {
     const newDivClass = active
@@ -31,6 +41,8 @@ function LabelAndInput({ labelText, forName, inputType, inputRef }) {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value)
+    const newCount = e.target.value.length
+    setCharCount(newCount)
   }
 
   const [curInputType, setCurInputType] = useState(inputType)
@@ -45,18 +57,37 @@ function LabelAndInput({ labelText, forName, inputType, inputRef }) {
       onFocus={toggleActive}
       onBlur={toggleActive}
     >
-      <label className={labelClass} htmlFor={forName}>
-        {labelText}
-      </label>
-      {inputType !== "password" ? (
-        <input
-          ref={inputRef}
-          className="label-and-input__input border-0 w-100"
-          type={inputType}
-          name={forName}
-          onChange={handleInputChange}
-        />
+      {textLimit ? (
+        <span className="d-flex justify-content-between">
+          <label className={labelClass} htmlFor={forName}>
+            {labelText}
+          </label>
+          <span
+            className={`small label-and-input__char-count--${
+              active ? "active" : "inactive"
+            }`}
+          >
+            {charCount} / {textLimit}
+          </span>
+        </span>
       ) : (
+        <label className={labelClass} htmlFor={forName}>
+          {labelText}
+        </label>
+      )}
+
+      {inputType === "textArea" && (
+        <textarea
+          name={forName}
+          rows={5}
+          className="label-and-input__input border-0 w-100"
+          onChange={handleInputChange}
+          value={inputValue}
+          maxLength={textLimit}
+        />
+      )}
+
+      {inputType === "password" && (
         <div className="d-flex justify-content-between">
           {" "}
           <input
@@ -65,6 +96,8 @@ function LabelAndInput({ labelText, forName, inputType, inputRef }) {
             type={curInputType}
             name={forName}
             onChange={handleInputChange}
+            value={inputValue}
+            maxLength={textLimit}
           />
           {curInputType === "password" ? (
             <FontAwesomeIcon
@@ -83,6 +116,18 @@ function LabelAndInput({ labelText, forName, inputType, inputRef }) {
           )}
         </div>
       )}
+
+      {inputType !== "password" && inputType !== "textArea" && (
+        <input
+          ref={inputRef}
+          className="label-and-input__input border-0 w-100"
+          type={inputType}
+          name={forName}
+          onChange={handleInputChange}
+          value={inputValue}
+          maxLength={textLimit}
+        />
+      )}
     </div>
   )
 }
@@ -93,6 +138,7 @@ LabelAndInput.propTypes = {
   labelText: propTypes.string,
   forName: propTypes.string,
   inputType: propTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
   inputRef: propTypes.object,
+  startValue: propTypes.string,
+  textLimit: propTypes.number,
 }
