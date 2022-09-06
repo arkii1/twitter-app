@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password)
   }
 
-  function login(email, password) {
+  function signInWithEmail(email, password) {
     return auth.signInWithEmailAndPassword(email, password)
   }
 
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     currentUser,
-    login,
+    signInWithEmail,
     signup,
     logout,
     googleSignIn,
