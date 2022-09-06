@@ -1,0 +1,44 @@
+@import url("../index.css");
+
+.image-input--avatar {
+    height: 8rem;
+    width: 8rem;
+    position: relative;
+    background-color: white;
+
+}
+.image-input--background {
+    height: min(15rem, 20vh);
+    width: 100%;
+    position: relative;
+    background-color: white;
+}
+
+.image-input__img--avatar,
+  {
+    cursor:default;
+}
+
+.image-input__img--avatar {
+    height: 8rem;
+    width: 8rem;
+}
+
+.image-input__img--background {
+    object-fit: cover;
+}
+
+
+.image-input__camera {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(var(--dark-gray), 0.75);
+    cursor: pointer;
+}
+
+.image-input__camera:hover {
+    background-color: rgba(var(--dark-gray), 0.5);
+    color: rgba(var(--black), 0.75);
+}
