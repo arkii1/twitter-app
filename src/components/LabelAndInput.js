@@ -84,6 +84,7 @@ function LabelAndInput({
           onChange={handleInputChange}
           value={inputValue}
           maxLength={textLimit}
+          ref={inputRef}
         />
       )}
 
