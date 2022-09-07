@@ -1,0 +1,9 @@
+@import url("../index.css");
+
+.configure-profile__top {
+    position: fixed;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+
