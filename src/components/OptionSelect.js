@@ -5,12 +5,18 @@ import uniqid from "uniqid"
 import "./OptionSelect.css"
 import useToggle from "../hooks/useToggle"
 
-function OptionSelect({ labelText, forName, options, inputRef }) {
+function OptionSelect({
+  labelText,
+  forName,
+  options,
+  inputRef,
+  startValue = "",
+}) {
   const [active, toggleActive] = useToggle()
   const [divClass, setDivClass] = useState("option-select--inactive")
   const [labelClass, setLabelClass] = useState("option-select--inactive")
   // Work around as select value clears on blue
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(startValue)
 
   useEffect(() => {
     const newDivClass = active
@@ -60,4 +66,5 @@ OptionSelect.propTypes = {
   forName: propTypes.string.isRequired,
   inputRef: propTypes.object,
   options: propTypes.arrayOf(propTypes.string).isRequired,
+  startValue: propTypes.string,
 }
