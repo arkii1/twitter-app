@@ -9,3 +9,25 @@
     margin-top: 15vh;
     transform: translateX(-50%);
 }
+
+/* width */
+.rounded-modal::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.rounded-modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 12px;
+}
+
+/* Handle */
+.rounded-modal::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.rounded-modal::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
