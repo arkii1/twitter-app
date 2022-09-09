@@ -27,19 +27,7 @@ export async function getUserDetailsFromAuthID(id) {
   if (qArr[0]) {
     return qArr[0]
   }
-  return {
-    avatarURL: "",
-    bgURL: "",
-    bio: "",
-    birthDay: "",
-    birthMonth: "",
-    birthYear: "",
-    location: "",
-    name: "",
-    userID: "",
-    username: "",
-    website: "",
-  }
+  return null
 }
 
 export function getUserDetailsFromEmail() {}
