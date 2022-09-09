@@ -19,7 +19,19 @@ import {
 
 function ConfigureProfile({ exit }) {
   const { currentUser } = useAuth()
-  const [curUserDetails, setCurUserDetails] = useState({})
+  const [curUserDetails, setCurUserDetails] = useState({
+    avatarURL: "",
+    bgURL: "",
+    bio: "",
+    birthDay: "",
+    birthMonth: "",
+    birthYear: "",
+    location: "",
+    name: "",
+    userID: "",
+    username: "",
+    website: "",
+  })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
