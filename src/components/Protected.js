@@ -15,5 +15,5 @@ function Protected({ children }) {
 export default Protected
 
 Protected.propTypes = {
-  children: propTypes.object,
+  children: propTypes.oneOfType([propTypes.array, propTypes.object]),
 }
