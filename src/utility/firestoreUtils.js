@@ -35,9 +35,27 @@ export function getUserDetailsFromEmail() {}
 export function getMainTweets() {}
 
 export async function createOrUpdateUserDetails(email, details) {
-  const docRef = doc(db, "userDetails", email)
   try {
-    await setDoc(docRef, details)
+    const d = await getUserDetailsFromAuthID(details.userID)
+    let newDetails = details
+    if (!d) {
+      const today = new Date()
+      const day = String(today.getDate())
+      const month = today.toLocaleString("default", { month: "long" })
+      const year = today.getFullYear()
+      // eslint-disable-next-line no-param-reassign
+      details.createdAt = {
+        day,
+        month,
+        year,
+      }
+      newDetails = details
+    } else if (!newDetails.createdAt) {
+      newDetails.createdAt = d.createdAt
+    }
+    const docRef = doc(db, "userDetails", email)
+    console.log("New details: ", newDetails)
+    await setDoc(docRef, newDetails)
   } catch (err) {
     console.log(err)
   }
