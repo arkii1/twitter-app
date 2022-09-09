@@ -3,13 +3,13 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA9c9QDzPQngKrwi2qXe9rs9n2PEoUqFjw",
-  authDomain: "twitter-clone-9749d.firebaseapp.com",
-  projectId: "twitter-clone-9749d",
-  storageBucket: "twitter-clone-9749d.appspot.com",
-  messagingSenderId: "1072963825966",
-  appId: "1:1072963825966:web:46484ce7578c0ed3330abf",
-  measurementId: "G-1NS42SXC2D",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 }
 
 // Initialize Firebase
