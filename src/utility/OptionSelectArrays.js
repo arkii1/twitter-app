@@ -17,7 +17,7 @@ export function getMonths() {
 }
 
 export function getDays() {
-  const arr = [...Array(31).keys()].map((n) => n.toString())
+  const arr = [...Array(31).keys()].map((n) => (n + 1).toString())
   arr.unshift("")
   return arr
 }
