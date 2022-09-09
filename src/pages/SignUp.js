@@ -35,7 +35,7 @@ function SignUp() {
     return setLoading(false)
   }
 
-  if (currentUser) return <Navigate to="/account" />
+  if (currentUser) return <Navigate to="/app/home" />
   return (
     <div className="sign-up p-3 rounded w-75 h-100 d-flex flex-column align-items-center justify-content-between">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
