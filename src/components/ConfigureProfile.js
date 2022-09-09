@@ -5,45 +5,18 @@ import propTypes from "prop-types"
 import Modal from "./Modal"
 import LabelAndInput from "./LabelAndInput"
 import { useAuth } from "../contexts/AuthContext"
+import { useDetails } from "../contexts/UserDetailsContext"
 import OptionSelect from "./OptionSelect"
 import { getMonths, getDays, getYears } from "../utility/OptionSelectArrays"
 import Button from "./Button"
 import ImageInput from "./ImageInput"
 import defaultAvatarSrc from "../assets/profile-pic.png"
 import defaultBackgroundSrc from "../assets/background.png"
-import {
-  createOrUpdateUserDetails,
-  usernameAlreadyExists,
-  getUserDetailsFromAuthID,
-} from "../utility/firestoreUtils"
+import { usernameAlreadyExists } from "../utility/firestoreUtils"
 
 function ConfigureProfile({ exit }) {
   const { currentUser } = useAuth()
-  const [curUserDetails, setCurUserDetails] = useState({
-    avatarURL: "",
-    bgURL: "",
-    bio: "",
-    birthDay: "",
-    birthMonth: "",
-    birthYear: "",
-    location: "",
-    name: "",
-    userID: "",
-    username: "",
-    website: "",
-  })
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const setDetails = async () => {
-      const newDetails = await getUserDetailsFromAuthID(currentUser.uid)
-      if (newDetails !== null) {
-        await setCurUserDetails(newDetails)
-      }
-      setLoading(false)
-    }
-    setDetails()
-  }, [currentUser])
+  const { userDetails, updateUserDetails } = useDetails()
 
   const nameRef = useRef()
   const usernameRef = useRef()
@@ -114,7 +87,7 @@ function ConfigureProfile({ exit }) {
       userID: currentUser.uid,
     }
     try {
-      createOrUpdateUserDetails(currentUser.email, details)
+      updateUserDetails(details)
     } catch (err) {
       console.log(err)
       return setError("Creating or updating user details failed")
@@ -128,134 +101,124 @@ function ConfigureProfile({ exit }) {
     if (error !== "") errorRef.current.scrollIntoView({ behavior: "smooth" })
   }, [error])
 
-  if (!loading)
-    return (
-      <Modal>
-        <form
-          onSubmit={handleSubmit}
-          className="configure-profile p-1 w-100 h-100 d-flex flex-column justify-content-between"
+  return (
+    <Modal>
+      <form
+        onSubmit={handleSubmit}
+        className="configure-profile p-1 w-100 h-100 d-flex flex-column justify-content-between"
+      >
+        <span className="configure-profile__top d-flex px-2 py-1">
+          <FontAwesomeIcon
+            icon={faXmark}
+            onClick={handleExit}
+            style={{ cursor: "pointer" }}
+          />
+          <h1 className="w-100 d-inline-flex justify-content-center">
+            Configure Profile
+          </h1>
+        </span>
+        <ImageInput
+          alt="Background"
+          inputRef={bgRef}
+          type="background"
+          startSrc={
+            userDetails !== null && userDetails.bgURL !== ""
+              ? userDetails.bgURL
+              : defaultBackgroundSrc
+          }
+        />
+        <span
+          className="px-2 d-flex flex-column justify-content-between gap-3 "
+          style={{ transform: "translateY(-4rem)", position: "relative" }}
         >
-          <span className="configure-profile__top d-flex px-2 py-1">
-            <FontAwesomeIcon
-              icon={faXmark}
-              onClick={handleExit}
-              style={{ cursor: "pointer" }}
-            />
-            <h1 className="w-100 d-inline-flex justify-content-center">
-              Configure Profile
-            </h1>
-          </span>
           <ImageInput
-            alt="Background"
-            inputRef={bgRef}
-            type="background"
+            alt="Profile avatar"
+            inputRef={avatarRef}
+            type="avatar"
             startSrc={
-              curUserDetails !== null && curUserDetails.bgURL !== ""
-                ? curUserDetails.bgURL
-                : defaultBackgroundSrc
+              userDetails !== null && userDetails.avatarURL !== ""
+                ? userDetails.avatarURL
+                : currentUser.photoURL || defaultAvatarSrc
             }
           />
-          <span
-            className="px-2 d-flex flex-column justify-content-between gap-3 "
-            style={{ transform: "translateY(-4rem)", position: "relative" }}
-          >
-            <ImageInput
-              alt="Profile avatar"
-              inputRef={avatarRef}
-              type="avatar"
-              startSrc={
-                curUserDetails !== null && curUserDetails.avatarURL !== ""
-                  ? curUserDetails.avatarURL
-                  : currentUser.photoURL || defaultAvatarSrc
-              }
+          <LabelAndInput
+            labelText="Name*"
+            forName="name"
+            inputType="text"
+            inputRef={nameRef}
+            startValue={
+              userDetails.name !== ""
+                ? userDetails.name
+                : currentUser.displayName
+            }
+            textLimit={50}
+          />
+          <LabelAndInput
+            labelText="Username*"
+            forName="username"
+            inputType="text"
+            inputRef={usernameRef}
+            textLimit={15}
+            startValue={
+              userDetails.username !== null ? userDetails.username : ""
+            }
+          />
+          <LabelAndInput
+            labelText="Bio"
+            forName="bio"
+            inputType="textArea"
+            inputRef={bioRef}
+            textLimit={160}
+            startValue={userDetails !== null ? userDetails.bio : ""}
+          />
+          <span className="small">Birth date*</span>
+          <div className="gap-1 w-100 d-flex justify-content-between align-items-center">
+            <OptionSelect
+              labelText="Month*"
+              forName="month"
+              options={getMonths()}
+              inputRef={monthRef}
+              startValue={userDetails !== null ? userDetails.birthMonth : ""}
             />
-            <LabelAndInput
-              labelText="Name*"
-              forName="name"
-              inputType="text"
-              inputRef={nameRef}
-              startValue={
-                curUserDetails.name !== ""
-                  ? curUserDetails.name
-                  : currentUser.displayName
-              }
-              textLimit={50}
+            <OptionSelect
+              labelText="Day*"
+              forName="day"
+              options={getDays()}
+              inputRef={dayRef}
+              startValue={userDetails !== null ? userDetails.birthDay : ""}
             />
-            <LabelAndInput
-              labelText="Username*"
-              forName="username"
-              inputType="text"
-              inputRef={usernameRef}
-              textLimit={15}
-              startValue={
-                curUserDetails.username !== null ? curUserDetails.username : ""
-              }
+            <OptionSelect
+              labelText="Year*"
+              forName="year"
+              options={getYears()}
+              inputRef={yearRef}
+              startValue={userDetails !== null ? userDetails.birthYear : ""}
             />
-            <LabelAndInput
-              labelText="Bio"
-              forName="bio"
-              inputType="textArea"
-              inputRef={bioRef}
-              textLimit={160}
-              startValue={curUserDetails !== null ? curUserDetails.bio : ""}
-            />
-            <span className="small">Birth date*</span>
-            <div className="gap-1 w-100 d-flex justify-content-between align-items-center">
-              <OptionSelect
-                labelText="Month*"
-                forName="month"
-                options={getMonths()}
-                inputRef={monthRef}
-                startValue={
-                  curUserDetails !== null ? curUserDetails.birthMonth : ""
-                }
-              />
-              <OptionSelect
-                labelText="Day*"
-                forName="day"
-                options={getDays()}
-                inputRef={dayRef}
-                startValue={
-                  curUserDetails !== null ? curUserDetails.birthDay : ""
-                }
-              />
-              <OptionSelect
-                labelText="Year*"
-                forName="year"
-                options={getYears()}
-                inputRef={yearRef}
-                startValue={
-                  curUserDetails !== null ? curUserDetails.birthYear : ""
-                }
-              />
-            </div>
-            <LabelAndInput
-              labelText="Location"
-              forName="location"
-              inputType="text"
-              inputRef={locationRef}
-              textLimit={30}
-              startValue={
-                curUserDetails !== null ? curUserDetails.location : ""
-              }
-            />
-            <LabelAndInput
-              labelText="Website"
-              forName="website"
-              inputType="url"
-              inputRef={websiteRef}
-              textLimit={100}
-              startValue={curUserDetails !== null ? curUserDetails.website : ""}
-            />
-            <span ref={errorRef} className="configure-profile__top__span pb-3">
-              {error && <p className="form-error">{error}</p>}
-              <Button text="Save" type="submit" colours="dark" />
-            </span>
+          </div>
+          <LabelAndInput
+            labelText="Location"
+            forName="location"
+            inputType="text"
+            inputRef={locationRef}
+            textLimit={30}
+            startValue={userDetails !== null ? userDetails.location : ""}
+          />
+          <LabelAndInput
+            labelText="Website"
+            forName="website"
+            inputType="url"
+            inputRef={websiteRef}
+            textLimit={100}
+            startValue={userDetails !== null ? userDetails.website : ""}
+          />
+          <span ref={errorRef} className="configure-profile__top__span pb-3">
+            {error && <p className="form-error">{error}</p>}
+            <Button text="Save" type="submit" colours="dark" />
           </span>
-        </form>
-      </Modal>
-    )
-  if (!loading) return null
+        </span>
+      </form>
+    </Modal>
+  )
 }
 
 export default ConfigureProfile
