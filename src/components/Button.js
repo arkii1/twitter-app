@@ -33,5 +33,5 @@ Button.propTypes = {
   colours: propTypes.string,
   onClick: propTypes.func,
   type: propTypes.string,
-  faLogo: propTypes.string,
+  faLogo: propTypes.object,
 }
