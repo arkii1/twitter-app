@@ -1,4 +1,5 @@
 import {
+  updateDoc,
   collection,
   query,
   where,
@@ -32,13 +33,34 @@ export async function getUserDetailsFromAuthID(id) {
 
 export function getUserDetailsFromEmail() {}
 
+export async function getUserDetailsFromUsername(username) {
+  const userDetailsRef = collection(db, "userDetails")
+  const q = await query(userDetailsRef, where("username", "==", username))
+  const queryResult = await getDocs(q)
+  const qArr = []
+  queryResult.forEach((d) => {
+    qArr.push(d.data())
+  })
+
+  if (qArr > 1)
+    return console.log(
+      "Two documents in userDetails have the same username. Username: ",
+      qArr[0].username
+    )
+  if (qArr[0]) {
+    return qArr[0]
+  }
+  return null
+}
+
 export function getMainTweets() {}
 
 export async function createOrUpdateUserDetails(email, details) {
   try {
+    const docRef = doc(db, "userDetails", email)
     const d = await getUserDetailsFromAuthID(details.userID)
-    let newDetails = details
     if (!d) {
+      const newDetails = details
       const today = new Date()
       const day = String(today.getDate())
       const month = today.toLocaleString("default", { month: "long" })
@@ -51,16 +73,9 @@ export async function createOrUpdateUserDetails(email, details) {
       }
       newDetails.following = []
       newDetails.followers = []
-      newDetails = details
-    } else {
-      Object.keys(d).forEach((key) => {
-        if (!newDetails[key]) {
-          newDetails[key] = d[key]
-        }
-      })
-    }
-    const docRef = doc(db, "userDetails", email)
-    await setDoc(docRef, newDetails)
+      newDetails.email = email
+      await setDoc(docRef, newDetails)
+    } else updateDoc(docRef, details)
   } catch (err) {
     console.log(err)
   }
@@ -79,4 +94,30 @@ export async function usernameAlreadyExists(username, id) {
     qArr.push(d.data())
   })
   return qArr.length > 0
+}
+
+export async function follow(userID, followID) {
+  const userDetails = await getUserDetailsFromAuthID(userID)
+  const followDetails = await getUserDetailsFromAuthID(followID)
+  userDetails.following.push(followID)
+  followDetails.followers.push(userID)
+  await createOrUpdateUserDetails(userDetails.email, userDetails)
+  await createOrUpdateUserDetails(followDetails.email, followDetails)
+}
+
+export async function unfollow(userID, followID) {
+  const userDetails = await getUserDetailsFromAuthID(userID)
+  const followDetails = await getUserDetailsFromAuthID(followID)
+  const index1 = userDetails.following.indexOf(followID)
+  userDetails.following.splice(index1, 1)
+  const index2 = followDetails.followers.indexOf(userID)
+  followDetails.followers.splice(index2, 1)
+  await createOrUpdateUserDetails(userDetails.email, userDetails)
+  await createOrUpdateUserDetails(followDetails.email, followDetails)
+}
+
+export async function isFollowing(userID, followID) {
+  const userDetails = await getUserDetailsFromAuthID(userID)
+  const index = userDetails.following.indexOf(followID)
+  return index > -1
 }
