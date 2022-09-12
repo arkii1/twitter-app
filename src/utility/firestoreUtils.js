@@ -44,17 +44,22 @@ export async function createOrUpdateUserDetails(email, details) {
       const month = today.toLocaleString("default", { month: "long" })
       const year = today.getFullYear()
       // eslint-disable-next-line no-param-reassign
-      details.createdAt = {
+      newDetails.createdAt = {
         day,
         month,
         year,
       }
+      newDetails.following = []
+      newDetails.followers = []
       newDetails = details
-    } else if (!newDetails.createdAt) {
-      newDetails.createdAt = d.createdAt
+    } else {
+      Object.keys(d).forEach((key) => {
+        if (!newDetails[key]) {
+          newDetails[key] = d[key]
+        }
+      })
     }
     const docRef = doc(db, "userDetails", email)
-    console.log("New details: ", newDetails)
     await setDoc(docRef, newDetails)
   } catch (err) {
     console.log(err)
