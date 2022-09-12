@@ -30,9 +30,9 @@ function SignIn() {
 
   if (currentUser) return <Navigate to="/app/home" />
   return (
-    <div className="sign-in p-3 rounded w-75 h-100 d-flex flex-column align-items-center justify-content-between">
+    <div className="sign-in p-3 rounded w-50 h-100 d-flex flex-column align-items-center justify-content-around">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
-      <h1>Sign in to Twitter</h1>
+      <h1 className="sign-in__h1">Sign in to Twitter</h1>
       <Button
         logo={googleLogo}
         text="Continue with Google"
