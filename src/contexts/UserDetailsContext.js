@@ -25,8 +25,9 @@ export function UserDetailsProvider({ children }) {
 
   const updateUserDetails = useCallback(
     async (details) => {
-      setUserDetails(details)
       await createOrUpdateUserDetails(currentUser.email, details)
+      const updatedDetails = await getUserDetailsFromAuthID(currentUser.uid)
+      setUserDetails(updatedDetails)
     },
     [currentUser]
   )
@@ -43,7 +44,6 @@ export function UserDetailsProvider({ children }) {
         const details = await getUserDetailsFromAuthID(currentUser.uid)
         if (details) setUserDetails(details)
         setLoading(false)
-        console.log("Init details")
       }
     }
 
