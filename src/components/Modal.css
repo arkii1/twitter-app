@@ -1,33 +1,42 @@
 @import url("../index.css");
 
-.rounded-modal {
+.my-modal {
+    background: rgba(var(--light-gray), 0.9);
+    height: 100vh;
+    width: 100vw;
     position: fixed;
+    left: 0;
+    z-index: 999;
+}
+
+.my-modal__content {
+    position: absolute;
     height: min(35rem, 80vh);
-    width: min(35rem, 75vw);
+    width: min(33rem, 75vw);
     background-color: white;
+    margin-top: 24vh;
     left: 50%;
-    margin-top: 15vh;
     transform: translateX(-50%);
 }
 
 /* width */
-.rounded-modal::-webkit-scrollbar {
+.my-modal__content::-webkit-scrollbar {
     width: 10px;
 }
 
 /* Track */
-.rounded-modal::-webkit-scrollbar-track {
+.my-modal__content::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 12px;
 }
 
 /* Handle */
-.rounded-modal::-webkit-scrollbar-thumb {
+.my-modal__content::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 10px;
 }
 
 /* Handle on hover */
-.rounded-modal::-webkit-scrollbar-thumb:hover {
+.my-modal__content::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
