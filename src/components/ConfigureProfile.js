@@ -122,7 +122,7 @@ function ConfigureProfile({ exit }) {
           inputRef={bgRef}
           type="background"
           startSrc={
-            userDetails !== null && userDetails.bgURL !== ""
+            userDetails && userDetails.bgURL !== ""
               ? userDetails.bgURL
               : defaultBackgroundSrc
           }
@@ -136,7 +136,7 @@ function ConfigureProfile({ exit }) {
             inputRef={avatarRef}
             type="avatar"
             startSrc={
-              userDetails !== null && userDetails.avatarURL !== ""
+              userDetails && userDetails.avatarURL !== ""
                 ? userDetails.avatarURL
                 : currentUser.photoURL || defaultAvatarSrc
             }
@@ -147,9 +147,7 @@ function ConfigureProfile({ exit }) {
             inputType="text"
             inputRef={nameRef}
             startValue={
-              userDetails.name !== ""
-                ? userDetails.name
-                : currentUser.displayName
+              userDetails ? userDetails.name : currentUser.displayName
             }
             textLimit={50}
           />
@@ -159,9 +157,7 @@ function ConfigureProfile({ exit }) {
             inputType="text"
             inputRef={usernameRef}
             textLimit={15}
-            startValue={
-              userDetails.username !== null ? userDetails.username : ""
-            }
+            startValue={userDetails ? userDetails.username : ""}
           />
           <LabelAndInput
             labelText="Bio"
@@ -169,7 +165,7 @@ function ConfigureProfile({ exit }) {
             inputType="textArea"
             inputRef={bioRef}
             textLimit={160}
-            startValue={userDetails !== null ? userDetails.bio : ""}
+            startValue={userDetails ? userDetails.bio : ""}
           />
           <span className="small">Birth date*</span>
           <div className="gap-1 w-100 d-flex justify-content-between align-items-center">
@@ -178,21 +174,21 @@ function ConfigureProfile({ exit }) {
               forName="month"
               options={getMonths()}
               inputRef={monthRef}
-              startValue={userDetails !== null ? userDetails.birthMonth : ""}
+              startValue={userDetails ? userDetails.birthMonth : ""}
             />
             <OptionSelect
               labelText="Day*"
               forName="day"
               options={getDays()}
               inputRef={dayRef}
-              startValue={userDetails !== null ? userDetails.birthDay : ""}
+              startValue={userDetails ? userDetails.birthDay : ""}
             />
             <OptionSelect
               labelText="Year*"
               forName="year"
               options={getYears()}
               inputRef={yearRef}
-              startValue={userDetails !== null ? userDetails.birthYear : ""}
+              startValue={userDetails ? userDetails.birthYear : ""}
             />
           </div>
           <LabelAndInput
@@ -201,7 +197,7 @@ function ConfigureProfile({ exit }) {
             inputType="text"
             inputRef={locationRef}
             textLimit={30}
-            startValue={userDetails !== null ? userDetails.location : ""}
+            startValue={userDetails ? userDetails.location : ""}
           />
           <LabelAndInput
             labelText="Website"
@@ -209,7 +205,7 @@ function ConfigureProfile({ exit }) {
             inputType="url"
             inputRef={websiteRef}
             textLimit={100}
-            startValue={userDetails !== null ? userDetails.website : ""}
+            startValue={userDetails ? userDetails.website : ""}
           />
           <span ref={errorRef} className="configure-profile__top__span pb-3">
             {error && <p className="form-error">{error}</p>}
