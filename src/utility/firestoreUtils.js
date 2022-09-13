@@ -122,6 +122,6 @@ export async function isFollowing(userID, followID) {
   return index > -1
 }
 
-export async function getUserDetailsFromIDArray(ids) {
+export function getUserDetailsFromIDArray(ids) {
   return ids.map((id) => getUserDetailsFromAuthID(id))
 }
