@@ -17,6 +17,7 @@ import {
   unfollow,
   isFollowing,
 } from "../utility/firestoreUtils"
+import FollowingFollowersLinks from "../components/FollowingFollowersLinks"
 
 function Profile() {
   const { userDetails } = useDetails()
@@ -120,24 +121,7 @@ function Profile() {
                   {details.createdAt.month} {details.createdAt.year}
                 </span>
               </span>
-              <span className="d-flex gap-3 justify-content-start align-items-center small">
-                <Link className="react-link" to="following">
-                  <span className="small">
-                    <span className="small--bold">
-                      {details.following.length}
-                    </span>{" "}
-                    Following
-                  </span>
-                </Link>
-                <Link className="react-link" to="followers">
-                  <span className="small">
-                    <span className="small--bold">
-                      {details.followers.length}
-                    </span>{" "}
-                    Followers
-                  </span>
-                </Link>
-              </span>
+              <FollowingFollowersLinks details={details} />
             </span>
           </span>
         </div>
