@@ -121,3 +121,7 @@ export async function isFollowing(userID, followID) {
   const index = userDetails.following.indexOf(followID)
   return index > -1
 }
+
+export async function getUserDetailsFromIDArray(ids) {
+  return ids.map((id) => getUserDetailsFromAuthID(id))
+}
