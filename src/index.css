@@ -20,15 +20,33 @@ body, #root {
 }
 
 .react-link {
-    color: rgb(var(--blue));
-    text-decoration: none; 
+    color: rgb(var(--black));
     transition: 0.1s;
+    text-decoration: none; 
+    text-decoration-color: rgb(var(--black));
 }
 
 .react-link:hover {
-    color: rgb(var(--blue));
-    text-decoration:underline; 
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--black));
+    color: rgb(var(--black));
+}
+
+.react-link--none {
+    text-decoration: none; 
+    color: inherit;
     transition: 0.1s;
+}
+
+.react-link--blue {
+    color: rgb(var(--blue));
+    text-decoration: none; 
+    transition: 0.1s;
+    text-decoration-color: rgb(var(--blue));
+}
+
+.react-link--blue:hover {
+    text-decoration: underline; 
 }
 
 .small {
