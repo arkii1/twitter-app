@@ -6,6 +6,7 @@ import {
   getUserDetailsFromUsername,
 } from "../utility/firestoreUtils"
 import UserCard from "./UserCard"
+import LinkTabs from "./LinkTabs"
 
 function UserList() {
   const { id: username } = useParams()
@@ -26,15 +27,31 @@ function UserList() {
     init()
   }, [])
 
+  const linkTabsData = [
+    {
+      link: `/app/${username}/following`,
+      text: "Following",
+    },
+    {
+      link: `/app/${username}/followers`,
+      text: "Followers",
+    },
+  ]
+
   if (last === "following" || last === "followers") {
     return (
-      <div>
-        {!loading && detailsArr.length > 0 ? (
-          detailsArr.map((d) => <UserCard details={d} />)
-        ) : (
-          <h3>No {last === "following" ? "accounts followed" : "followers"}</h3>
-        )}
-      </div>
+      <>
+        <LinkTabs links={linkTabsData} />
+        <div>
+          {!loading && detailsArr.length > 0 ? (
+            detailsArr.map((d) => <UserCard details={d} />)
+          ) : (
+            <h3>
+              No {last === "following" ? "accounts followed" : "followers"}
+            </h3>
+          )}
+        </div>
+      </>
     )
   }
 
