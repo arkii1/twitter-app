@@ -58,7 +58,7 @@ function SignIn() {
       <Button text="Forgotten password?" colours="light" />
       <span className="small my-3">
         Don&apos;t have an account?{" "}
-        <Link className="react-link" to="/modal/sign-up">
+        <Link className="react-link--blue" to="/modal/sign-up">
           Sign up
         </Link>
       </span>

@@ -69,7 +69,7 @@ function SignUp() {
       </form>
       <span className="small my-3">
         Have an account already?{" "}
-        <Link to="/modal/sign-in" className="react-link">
+        <Link to="/modal/sign-in" className="react-link--blue">
           Sign in
         </Link>
       </span>
