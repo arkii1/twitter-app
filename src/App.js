@@ -10,6 +10,8 @@ import Account from "./pages/Account"
 import Profile from "./pages/Profile"
 import AppLayout from "./components/AppLayout"
 import { UserDetailsProvider } from "./contexts/UserDetailsContext"
+import Logout from "./components/Logout"
+import UserList from "./components/UserList"
 
 function App() {
   return (
@@ -21,12 +23,15 @@ function App() {
               <Route index path="sign-in" element={<SignIn />} />
               <Route path="sign-up" element={<SignUp />} />
             </Route>
+            <Route path="logout" element={<Logout />} />
           </Routes>
           <UserDetailsProvider>
             <Routes>
               <Route path="app" element={<AppLayout />}>
                 <Route index path="home" element={<Account />} />
                 <Route path=":id" element={<Profile />} />
+                <Route path=":id/following" element={<UserList />} />
+                <Route path=":id/followers" element={<UserList />} />
               </Route>{" "}
             </Routes>
           </UserDetailsProvider>
