@@ -33,7 +33,6 @@ function UserCard({ details }) {
     setProfileModal(true)
     const { x, y } = ref.current.getBoundingClientRect()
     setModalPos([x, y])
-    console.log(ref.current.getBoundingClientRect())
   }
 
   const handleModalOff = () => {
