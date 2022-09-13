@@ -1,0 +1,23 @@
+@import url("../index.css");
+
+.user-card__h3 {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.user-card__username {
+    color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+}
+
+.user-card__bio {
+    font-size: 0.91rem;
+}
+
+.user-card {
+    transition: 0.2s;
+}
+
+.user-card:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+}
