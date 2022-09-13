@@ -38,6 +38,11 @@ body, #root {
     transition: 0.1s;
 }
 
+.react-link--none:hover {
+    text-decoration: none; 
+    color: inherit;
+}
+
 .react-link--blue {
     color: rgb(var(--blue));
     text-decoration: none; 
