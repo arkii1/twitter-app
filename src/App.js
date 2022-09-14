@@ -30,9 +30,8 @@ function App() {
               <Route path="app" element={<AppLayout />}>
                 <Route index path="home" element={<Account />} />
                 <Route path=":id" element={<Profile />} />
-                <Route path=":id/following" element={<UserList />} />
-                <Route path=":id/followers" element={<UserList />} />
-              </Route>{" "}
+                <Route path=":id/:userList" element={<UserList />} />
+              </Route>
             </Routes>
           </UserDetailsProvider>
         </AuthProvider>
