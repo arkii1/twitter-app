@@ -34,7 +34,6 @@ function Profile() {
         const newDetails = await getUserDetailsFromUsername(id)
         setDetails(newDetails)
         const fol = await isFollowing(userDetails.userID, newDetails.userID)
-        console.log(fol)
         setFollowing(fol)
         setLoading(false)
       }
