@@ -54,7 +54,8 @@ function UserCard({ details }) {
 
   return (
     profileDetails &&
-    profileDetails.userID !== userDetails.userID && (
+    profileDetails.userID !== userDetails.userID &&
+    following !== null && (
       <>
         {profileModal && (
           <span
