@@ -1,0 +1,37 @@
+@import url("../index.css");
+.link-tabs__link,
+.link-tabs__link--active {
+    flex-grow: 1;   
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.link-tabs__link{
+    color: rgb(var(--light-gray));
+}
+
+.link-tabs__link--active {
+    color: rgb(var(--black));
+}
+
+.link-tabs__link:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+    color: rgb(var(--light-gray));
+}
+
+.link-tabs__link--active:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+    color: rgb(var(--black));
+}
+
+.links-tabs__line--active,
+.links-tabs__line--inactive {
+    height: 4px;
+    width: 50%;
+    background-color: rgb(var(--blue));
+    bottom: 0;
+}
+
+.links-tabs__line--inactive {
+    opacity: 0;
+}
