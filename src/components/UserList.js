@@ -9,23 +9,26 @@ import UserCard from "./UserCard"
 import LinkTabs from "./LinkTabs"
 
 function UserList() {
-  const { id: username } = useParams()
-  const hrefParts = window.location.pathname.split("/")
-  const last = hrefParts[hrefParts.length - 1]
-  const [detailsArr, setDetailsArr] = useState([])
+  const { id: username, userList } = useParams()
   const [loading, setLoading] = useState(true)
+
+  const [followingJSX, setFollowingJSX] = useState()
+  const [followersJSX, setFollowersJSX] = useState()
 
   useEffect(() => {
     const init = async () => {
       const details = await getUserDetailsFromUsername(username)
-      const array = await getUserDetailsFromIDArray(
-        last === "following" ? details.following : details.followers
-      )
-      setDetailsArr(array)
+      const followingData = await getUserDetailsFromIDArray(details.following)
+      const followersData = await getUserDetailsFromIDArray(details.followers)
+      const newFollowingJSX = followingData.map((f) => <UserCard details={f} />)
+      const newFollowersJSX = followersData.map((f) => <UserCard details={f} />)
+      setFollowingJSX(newFollowingJSX)
+      setFollowersJSX(newFollowersJSX)
       setLoading(false)
     }
     init()
-  }, [])
+    console.log("Init")
+  }, [username])
 
   const linkTabsData = [
     {
@@ -38,18 +41,12 @@ function UserList() {
     },
   ]
 
-  if (last === "following" || last === "followers") {
+  if (userList === "following" || userList === "followers") {
     return (
       <>
         <LinkTabs links={linkTabsData} />
         <div>
-          {!loading && detailsArr.length > 0 ? (
-            detailsArr.map((d) => <UserCard details={d} />)
-          ) : (
-            <h3>
-              No {last === "following" ? "accounts followed" : "followers"}
-            </h3>
-          )}
+          {!loading && userList === "following" ? followingJSX : followersJSX}
         </div>
       </>
     )
