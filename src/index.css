@@ -69,6 +69,20 @@ body, #root {
     color: rgb(var(--red));
 }
 
+.break-line {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(var(--light-gray), 0.2);
+    border-radius: 0.5px;
+}
+
+.break-line--vert {
+    height: 2rem; 
+    width: 1px;
+    background-color: rgba(var(--light-gray), 0.2);
+    border-radius: 0.5px;
+}
+
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
