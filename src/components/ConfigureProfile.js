@@ -77,9 +77,11 @@ function ConfigureProfile({ exit }) {
       avatarURL: avatarRef.current.src,
       bgURL: bgRef.current.src,
       bio: bioRef.current.value || "",
-      birthDay: dayRef.current.value,
-      birthMonth: monthRef.current.value,
-      birthYear: yearRef.current.value,
+      birthDay: {
+        day: dayRef.current.value,
+        month: monthRef.current.value,
+        year: yearRef.current.value,
+      },
       location: locationRef.current.value || "",
       name: nameRef.current.value,
       username: usernameRef.current.value,
@@ -174,21 +176,21 @@ function ConfigureProfile({ exit }) {
               forName="month"
               options={getMonths()}
               inputRef={monthRef}
-              startValue={userDetails ? userDetails.birthMonth : ""}
+              startValue={userDetails ? userDetails.birthDay.month : ""}
             />
             <OptionSelect
               labelText="Day*"
               forName="day"
               options={getDays()}
               inputRef={dayRef}
-              startValue={userDetails ? userDetails.birthDay : ""}
+              startValue={userDetails ? userDetails.birthDay.day : ""}
             />
             <OptionSelect
               labelText="Year*"
               forName="year"
               options={getYears()}
               inputRef={yearRef}
-              startValue={userDetails ? userDetails.birthYear : ""}
+              startValue={userDetails ? userDetails.birthDay.year : ""}
             />
           </div>
           <LabelAndInput
@@ -207,7 +209,10 @@ function ConfigureProfile({ exit }) {
             textLimit={100}
             startValue={userDetails ? userDetails.website : ""}
           />
-          <span ref={errorRef} className="configure-profile__top__span pb-3">
+          <span
+            ref={errorRef}
+            className="p-3 d-flex flex-column justify-content-center align-items-center"
+          >
             {error && <p className="form-error">{error}</p>}
             <Button text="Save" type="submit" colours="dark" />
           </span>
