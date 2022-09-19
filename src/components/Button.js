@@ -15,11 +15,16 @@ function Button({
     <button
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={`button--${colours} d-flex gap-1 align-items-center justify-content-center w-100`}
+      className={`button--${colours} d-flex gap-1 align-items-center justify-content-center p-2 `}
       onClick={onClick}
     >
       {logo && <img src={logo} alt="" style={{ height: "1rem" }} />}
-      {faLogo && <FontAwesomeIcon icon={faLogo} />}
+      {faLogo && (
+        <FontAwesomeIcon
+          icon={faLogo}
+          style={{ height: "1rem", width: "1rem" }}
+        />
+      )}
       {text}
     </button>
   )
