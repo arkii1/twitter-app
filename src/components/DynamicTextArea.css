@@ -1,0 +1,7 @@
+.dynamic-text-area__text-area {
+    resize: none;
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    overflow-y: hidden;
+}
