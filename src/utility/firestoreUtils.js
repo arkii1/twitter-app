@@ -74,6 +74,8 @@ export async function createOrUpdateUserDetails(email, details) {
       newDetails.following = []
       newDetails.followers = []
       newDetails.email = email
+      newDetails.likedTweets = []
+      newDetails.tweets = []
       await setDoc(docRef, newDetails)
     } else updateDoc(docRef, details)
   } catch (err) {
