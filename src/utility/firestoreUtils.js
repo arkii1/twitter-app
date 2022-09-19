@@ -6,6 +6,7 @@ import {
   doc,
   setDoc,
   getDocs,
+  addDoc,
 } from "firebase/firestore"
 import { firestore } from "../firebase"
 
@@ -126,4 +127,15 @@ export async function isFollowing(userID, followID) {
 
 export function getUserDetailsFromIDArray(ids) {
   return ids.map((id) => getUserDetailsFromAuthID(id))
+}
+
+export async function createTweet(userID, replyID, text, attachment) {
+  const details = {
+    userID,
+    replyID,
+    text,
+    attachment,
+  }
+  const tweetCol = collection(db, "tweets")
+  addDoc(tweetCol, details)
 }
