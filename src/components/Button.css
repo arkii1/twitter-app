@@ -1,13 +1,14 @@
 .button--light,
 .button--dark, 
-.button--blue  {
-    width: 100%;
+.button--blue,
+.button--blue--reverse  {
     outline: none;
     border-radius: 20px;
-    padding: 0.5rem;
     transition: 0.1s;
     font-weight: bold;
     font-size: 0.9rem;
+    width: max-content;
+    height: max-content;
 } 
 
 .button--dark {
@@ -28,6 +29,12 @@
     color: rgb(var(--white));
 }
 
+.button--blue--reverse  {
+    border: 1px solid rgb(var(--white));
+    background-color: rgb(var(--white));
+    color: rgb(var(--blue));
+}
+
 .button--light:hover  {
     background-color: rgba(var(--black), 0.1);
     transition: 0.1s;
@@ -39,7 +46,13 @@
 }
 
 .button--blue:hover  {
-    background-color: rgba(var(--blue), 0.9);
-    border: 1px solid rgba(var(--blue), 0.9);
+    background-color: rgba(var(--blue), 0.8);
+    border: 1px solid rgba(var(--blue), 0.8);
+    transition: 0.1s;
+}
+
+.button--blue--reverse:hover  {
+    background-color: rgba(var(--black), 0.1);
+    border: 1px solid rgba(var(--black), 0.1);
     transition: 0.1s;
 }
