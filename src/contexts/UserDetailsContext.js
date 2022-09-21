@@ -7,7 +7,7 @@ import React, {
 } from "react"
 import propTypes from "prop-types"
 import {
-  getUserDetailsFromAuthID,
+  getUserDetailsFromID,
   createOrUpdateUserDetails,
 } from "../utility/firestoreUtils"
 import { useAuth } from "./AuthContext"
@@ -26,7 +26,7 @@ export function UserDetailsProvider({ children }) {
   const updateUserDetails = useCallback(
     async (details) => {
       await createOrUpdateUserDetails(currentUser.email, details)
-      const updatedDetails = await getUserDetailsFromAuthID(currentUser.uid)
+      const updatedDetails = await getUserDetailsFromID(currentUser.uid)
       setUserDetails(updatedDetails)
     },
     [currentUser]
@@ -41,7 +41,7 @@ export function UserDetailsProvider({ children }) {
     const initCurDetails = async () => {
       if (currentUser) {
         setLoading(true)
-        const details = await getUserDetailsFromAuthID(currentUser.uid)
+        const details = await getUserDetailsFromID(currentUser.uid)
         if (details) setUserDetails(details)
         setLoading(false)
       }
