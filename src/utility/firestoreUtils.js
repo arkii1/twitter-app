@@ -7,12 +7,13 @@ import {
   setDoc,
   getDocs,
   addDoc,
+  getDoc,
 } from "firebase/firestore"
 import { firestore } from "../firebase"
 
 const db = firestore
 
-export async function getUserDetailsFromAuthID(id) {
+export async function getUserDetailsFromID(id) {
   const userDetailsRef = collection(db, "userDetails")
   const q = await query(userDetailsRef, where("userID", "==", id))
   const queryResult = await getDocs(q)
@@ -32,7 +33,9 @@ export async function getUserDetailsFromAuthID(id) {
   return null
 }
 
-export function getUserDetailsFromEmail() {}
+export function getUserDetailsFromIDArray(ids) {
+  return ids.map((id) => getUserDetailsFromID(id))
+}
 
 export async function getUserDetailsFromUsername(username) {
   const userDetailsRef = collection(db, "userDetails")
@@ -54,13 +57,11 @@ export async function getUserDetailsFromUsername(username) {
   return null
 }
 
-export function getMainTweets() {}
-
 export async function createOrUpdateUserDetails(email, details) {
   try {
     const docRef = doc(db, "userDetails", email)
-    const d = await getUserDetailsFromAuthID(details.userID)
-    if (!d) {
+    const docSnap = await getDoc(docRef)
+    if (!docSnap) {
       const newDetails = details
       const today = new Date()
       const day = String(today.getDate())
@@ -100,8 +101,8 @@ export async function usernameAlreadyExists(username, id) {
 }
 
 export async function follow(userID, followID) {
-  const userDetails = await getUserDetailsFromAuthID(userID)
-  const followDetails = await getUserDetailsFromAuthID(followID)
+  const userDetails = await getUserDetailsFromID(userID)
+  const followDetails = await getUserDetailsFromID(followID)
   userDetails.following.push(followID)
   followDetails.followers.push(userID)
   await createOrUpdateUserDetails(userDetails.email, userDetails)
@@ -109,8 +110,8 @@ export async function follow(userID, followID) {
 }
 
 export async function unfollow(userID, followID) {
-  const userDetails = await getUserDetailsFromAuthID(userID)
-  const followDetails = await getUserDetailsFromAuthID(followID)
+  const userDetails = await getUserDetailsFromID(userID)
+  const followDetails = await getUserDetailsFromID(followID)
   const index1 = userDetails.following.indexOf(followID)
   userDetails.following.splice(index1, 1)
   const index2 = followDetails.followers.indexOf(userID)
@@ -120,22 +121,99 @@ export async function unfollow(userID, followID) {
 }
 
 export async function isFollowing(userID, followID) {
-  const userDetails = await getUserDetailsFromAuthID(userID)
+  const userDetails = await getUserDetailsFromID(userID)
   const index = userDetails.following.indexOf(followID)
   return index > -1
 }
 
-export function getUserDetailsFromIDArray(ids) {
-  return ids.map((id) => getUserDetailsFromAuthID(id))
-}
-
-export async function createTweet(userID, replyID, text, attachment) {
+export async function createTweet(
+  userID,
+  replyID,
+  repliesArr,
+  text,
+  attachment
+) {
+  const today = new Date()
+  const createdAt = {
+    second: today.getSeconds(),
+    minute: today.getMinutes(),
+    hour: today.getHours(),
+    day: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
+  }
   const details = {
     userID,
     replyID,
+    repliesArr,
     text,
     attachment,
+    createdAt,
   }
   const tweetCol = collection(db, "tweets")
-  addDoc(tweetCol, details)
+  const ref = await addDoc(tweetCol, details)
+  const d = await getUserDetailsFromID(userID)
+  const tweetsArr = d.tweets
+  tweetsArr.push(ref.id)
+  console.log("tweets : ", ref)
+  createOrUpdateUserDetails(d.email, {
+    tweets: tweetsArr,
+  })
+}
+
+export async function getTweetFromID(id) {
+  const docRef = doc(db, "tweets", id)
+  const docSnap = await getDoc(docRef)
+  if (docSnap.exists()) return docSnap.data()
+  return null
+}
+
+export function getTweetsFromUsersArr(followingArr, start, length) {
+  const unsubscribe = async () => {
+    let retArr = []
+
+    const followingData = await Promise.all(
+      followingArr.map((followingID) => getUserDetailsFromID(followingID))
+    )
+
+    const tweetIds = []
+    followingData.forEach((following) => {
+      following.tweets.forEach((tweetId) => {
+        tweetIds.push(tweetId)
+      })
+    })
+
+    const tweetData = await Promise.all(
+      tweetIds.map((id) => getTweetFromID(id))
+    )
+
+    const sortedTweetData = tweetData.sort((a, b) => {
+      const createdA = a.createdAt
+      const createdB = b.createdAt
+      if (createdA.year !== createdB.year) {
+        return createdB.year - createdA.year
+      }
+      if (createdA.month !== createdB.month) {
+        return createdB.month - createdA.month
+      }
+      if (createdA.day !== createdB.day) {
+        return createdB.day - createdA.day
+      }
+      if (createdA.hour !== createdB.hour) {
+        return createdB.hour - createdA.hour
+      }
+      if (createdA.minute !== createdB.minute) {
+        return createdB.minute - createdA.minute
+      }
+      if (createdA.second !== createdB.second) {
+        return createdB.second - createdA.second
+      }
+      return 0
+    })
+
+    retArr = sortedTweetData.splice(start, length)
+    return retArr
+  }
+
+  return unsubscribe()
 }
