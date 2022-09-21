@@ -12,6 +12,7 @@ import AppLayout from "./components/AppLayout"
 import { UserDetailsProvider } from "./contexts/UserDetailsContext"
 import Logout from "./components/Logout"
 import UserList from "./components/UserList"
+import TweetList from "./components/TweetList"
 
 function App() {
   return (
@@ -29,8 +30,10 @@ function App() {
             <Routes>
               <Route path="app" element={<AppLayout />}>
                 <Route index path="home" element={<Account />} />
-                <Route path=":id" element={<Profile />} />
-                <Route path=":id/:userList" element={<UserList />} />
+                <Route path=":id" element={<Profile />}>
+                  <Route path="tweets/:tweetList" element={<TweetList />} />
+                </Route>
+                <Route path=":id/community/:userList" element={<UserList />} />
               </Route>
             </Routes>
           </UserDetailsProvider>
