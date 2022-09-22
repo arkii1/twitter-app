@@ -37,7 +37,7 @@ function SignUp() {
 
   if (currentUser) return <Navigate to="/app/home" />
   return (
-    <div className="sign-up p-3 rounded w-75 h-100 d-flex flex-column align-items-center justify-content-between">
+    <div className="sign-up p-3 rounded w-75 h-100 d-flex flex-column align-items-center justify-content-around">
       <img src={twitterAnim} alt="" style={{ height: "3rem", top: "1rem" }} />
       <h1 className="sign-up__h1"> Join Twitter today</h1>
       {error && <p className="form-error">{error}</p>}
