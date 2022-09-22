@@ -38,6 +38,7 @@ function SignIn() {
         text="Continue with Google"
         colours="light"
         onClick={handelGoogleSignIn}
+        width="100%"
       />
       or
       <form className="w-100 d-flex flex-column gap-2">
@@ -53,9 +54,14 @@ function SignIn() {
           forName="password"
           inputRef={passwordRef}
         />
-        <Button text="Sign In" colours="dark" onClick={handleEmailSignIn} />
+        <Button
+          text="Sign In"
+          colours="dark"
+          onClick={handleEmailSignIn}
+          width="100%"
+        />
       </form>
-      <Button text="Forgotten password?" colours="light" />
+      <Button text="Forgotten password?" colours="light" width="100%" />
       <span className="small my-3">
         Don&apos;t have an account?{" "}
         <Link className="react-link--blue" to="/modal/sign-up">
