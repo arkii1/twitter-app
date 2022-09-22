@@ -5,6 +5,7 @@
     --black: 15,20,25;
     --white : 255, 255, 255;
     --red: 249, 24, 128;
+    --green: 0, 186, 124;
 
     font-family: Arial, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   
@@ -60,7 +61,7 @@ body, #root {
 }
 
 .small--bold {
-    color: black;
+    color: rgb(var(--light-gray));
     font-weight: bold;
     font-size: 0.8rem;
 }
@@ -83,6 +84,44 @@ body, #root {
     border-radius: 0.5px;
 }
 
+.username {
+    color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+}
+.username:hover {
+    color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.name {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: black;
+}
+
+.text {
+    color: black;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
+.underline-on-hover {
+    text-decoration: none;
+}
+
+.underline-on-hover:hover {
+    text-decoration: underline;
+}
+
+.gray-img-on-hover:hover {
+    -webkit-filter: brightness(80%);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
