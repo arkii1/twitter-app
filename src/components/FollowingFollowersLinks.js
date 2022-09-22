@@ -10,7 +10,9 @@ function FollowingFollowersLinks({ details }) {
         to={`/app/${details.username}/community/following`}
       >
         <span className="small">
-          <span className="small--bold">{details.following.length}</span>{" "}
+          <span className="small--bold" style={{ color: "black" }}>
+            {details.following.length}
+          </span>{" "}
           Following
         </span>
       </Link>
@@ -19,7 +21,9 @@ function FollowingFollowersLinks({ details }) {
         to={`/app/${details.username}/community/followers`}
       >
         <span className="small">
-          <span className="small--bold">{details.followers.length}</span>{" "}
+          <span className="small--bold" style={{ color: "black" }}>
+            {details.followers.length}
+          </span>{" "}
           Followers
         </span>
       </Link>
