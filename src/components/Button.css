@@ -1,13 +1,13 @@
 .button--light,
 .button--dark, 
 .button--blue,
-.button--blue--reverse  {
+.button--blue--reverse,
+.button--inherit {
     outline: none;
     border-radius: 20px;
     transition: 0.1s;
     font-weight: bold;
     font-size: 0.9rem;
-    width: max-content;
     height: max-content;
 } 
 
@@ -55,4 +55,11 @@
     background-color: rgba(var(--black), 0.1);
     border: 1px solid rgba(var(--black), 0.1);
     transition: 0.1s;
+}
+
+.button--inherit {
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    outline: none;
 }
