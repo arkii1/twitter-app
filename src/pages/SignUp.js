@@ -65,6 +65,7 @@ function SignUp() {
           text="Sign Up"
           colours="dark"
           disabled={loading}
+          width="100%"
         />
       </form>
       <span className="small my-3">
