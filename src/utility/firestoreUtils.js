@@ -61,7 +61,7 @@ export async function createOrUpdateUserDetails(email, details) {
   try {
     const docRef = doc(db, "userDetails", email)
     const docSnap = await getDoc(docRef)
-    if (!docSnap) {
+    if (!docSnap.exists()) {
       const newDetails = details
       const today = new Date()
       const day = String(today.getDate())
@@ -142,6 +142,8 @@ export async function createTweet(
     month: today.getMonth() + 1,
     year: today.getFullYear(),
   }
+  const retweets = []
+  const likes = []
   const details = {
     userID,
     replyID,
@@ -149,6 +151,8 @@ export async function createTweet(
     text,
     attachment,
     createdAt,
+    retweets,
+    likes,
   }
   const tweetCol = collection(db, "tweets")
   const ref = await addDoc(tweetCol, details)
