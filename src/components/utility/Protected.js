@@ -1,7 +1,7 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
 import propTypes from "prop-types"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 
 function Protected({ children }) {
   const { currentUser } = useAuth()
