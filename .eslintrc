@@ -19,8 +19,19 @@
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "prettier/prettier": [
         "error", {
-          "semi": false
-        }
+          "semi": false,
+          "printWidth": 80,
+          "tabWidth": 4,
+          "trailingComma": "all",
+          "singleQuote": true,
+          "importOrder": [ 
+            "^(react/(.*)$)|^(react*)",
+            "<THIRD_PARTY_MODULES>",
+            "^[./]" 
+          ], 
+          "importOrderSeparation": true,
+          "importOrderSortSpecifiers": true,
+        },
       ],
       "jsx-a11y/label-has-associated-control": ["error", {
         "required": {
@@ -35,3 +46,5 @@
 
     }
   }
+
+ 
