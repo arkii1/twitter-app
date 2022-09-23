@@ -1,46 +1,57 @@
-import React from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { AuthProvider } from "./contexts/AuthContext"
-import "./App.css"
-import "./index.css"
-import Modal from "./components/Modal"
-import SignIn from "./pages/SignIn"
-import SignUp from "./pages/SignUp"
-import Account from "./pages/Account"
-import Profile from "./pages/Profile"
-import AppLayout from "./components/AppLayout"
-import { UserDetailsProvider } from "./contexts/UserDetailsContext"
-import Logout from "./components/Logout"
-import UserList from "./components/UserList"
-import TweetList from "./components/TweetList"
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+import './App.css'
+import TweetList from './components/common/TweetList'
+import Account from './components/home/Home'
+import AppLayout from './components/layout/AppLayout'
+import Modal from './components/layout/Modal'
+import SignIn from './components/login/SignIn'
+import SignUp from './components/login/SignUp'
+import Profile from './components/profile/Profile'
+import UserList from './components/profile/UserList'
+import Logout from './components/utility/Logout'
+import { AuthProvider } from './contexts/AuthContext'
+import { UserDetailsProvider } from './contexts/UserDetailsContext'
+import './index.css'
 
 function App() {
-  return (
-    <div className="App w-100 h-100 d-flex justify-content-center">
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="modal" element={<Modal />}>
-              <Route index path="sign-in" element={<SignIn />} />
-              <Route path="sign-up" element={<SignUp />} />
-            </Route>
-            <Route path="logout" element={<Logout />} />
-          </Routes>
-          <UserDetailsProvider>
-            <Routes>
-              <Route path="app" element={<AppLayout />}>
-                <Route index path="home" element={<Account />} />
-                <Route path=":id" element={<Profile />}>
-                  <Route path="tweets/:tweetList" element={<TweetList />} />
-                </Route>
-                <Route path=":id/community/:userList" element={<UserList />} />
-              </Route>
-            </Routes>
-          </UserDetailsProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </div>
-  )
+    return (
+        <div className="App w-100 h-100 d-flex justify-content-center">
+            <BrowserRouter>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="modal" element={<Modal />}>
+                            <Route index path="sign-in" element={<SignIn />} />
+                            <Route path="sign-up" element={<SignUp />} />
+                        </Route>
+                        <Route path="logout" element={<Logout />} />
+                    </Routes>
+                    <UserDetailsProvider>
+                        <Routes>
+                            <Route path="app" element={<AppLayout />}>
+                                <Route
+                                    index
+                                    path="home"
+                                    element={<Account />}
+                                />
+                                <Route path=":id" element={<Profile />}>
+                                    <Route
+                                        path="tweets/:tweetList"
+                                        element={<TweetList />}
+                                    />
+                                </Route>
+                                <Route
+                                    path=":id/community/:userList"
+                                    element={<UserList />}
+                                />
+                            </Route>
+                        </Routes>
+                    </UserDetailsProvider>
+                </AuthProvider>
+            </BrowserRouter>
+        </div>
+    )
 }
 
 export default App

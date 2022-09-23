@@ -1,58 +1,69 @@
-import React, { useEffect, useState } from "react"
-import "./styles.css"
-import { useParams, Navigate } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
+
 import {
-  getUserDetailsFromIDArray,
-  getUserDetailsFromUsername,
-} from "../../utility/firestoreUtils"
-import UserCard from "./UserCard"
-import LinkTabs from "../common/LinkTabs"
+    getUserDetailsFromIDArray,
+    getUserDetailsFromUsername,
+} from '../../utility/firestoreUtils'
+import LinkTabs from '../common/LinkTabs'
+import UserCard from './UserCard'
+import './styles.css'
 
 function UserList() {
-  const { id: username, userList } = useParams()
-  const [loading, setLoading] = useState(true)
+    const { id: username, userList } = useParams()
+    const [loading, setLoading] = useState(true)
 
-  const [followingJSX, setFollowingJSX] = useState()
-  const [followersJSX, setFollowersJSX] = useState()
+    const [followingJSX, setFollowingJSX] = useState()
+    const [followersJSX, setFollowersJSX] = useState()
 
-  useEffect(() => {
-    const init = async () => {
-      const details = await getUserDetailsFromUsername(username)
-      const followingData = await getUserDetailsFromIDArray(details.following)
-      const followersData = await getUserDetailsFromIDArray(details.followers)
-      const newFollowingJSX = followingData.map((f) => <UserCard details={f} />)
-      const newFollowersJSX = followersData.map((f) => <UserCard details={f} />)
-      setFollowingJSX(newFollowingJSX)
-      setFollowersJSX(newFollowersJSX)
-      setLoading(false)
+    useEffect(() => {
+        const init = async () => {
+            const details = await getUserDetailsFromUsername(username)
+            const followingData = await getUserDetailsFromIDArray(
+                details.following,
+            )
+            const followersData = await getUserDetailsFromIDArray(
+                details.followers,
+            )
+            const newFollowingJSX = followingData.map((f) => (
+                <UserCard details={f} />
+            ))
+            const newFollowersJSX = followersData.map((f) => (
+                <UserCard details={f} />
+            ))
+            setFollowingJSX(newFollowingJSX)
+            setFollowersJSX(newFollowersJSX)
+            setLoading(false)
+        }
+        init()
+        console.log('Init')
+    }, [username])
+
+    const linkTabsData = [
+        {
+            link: `/app/${username}/following`,
+            text: 'Following',
+        },
+        {
+            link: `/app/${username}/followers`,
+            text: 'Followers',
+        },
+    ]
+
+    if (userList === 'following' || userList === 'followers') {
+        return (
+            <>
+                <LinkTabs links={linkTabsData} />
+                <div>
+                    {!loading && userList === 'following'
+                        ? followingJSX
+                        : followersJSX}
+                </div>
+            </>
+        )
     }
-    init()
-    console.log("Init")
-  }, [username])
 
-  const linkTabsData = [
-    {
-      link: `/app/${username}/following`,
-      text: "Following",
-    },
-    {
-      link: `/app/${username}/followers`,
-      text: "Followers",
-    },
-  ]
-
-  if (userList === "following" || userList === "followers") {
-    return (
-      <>
-        <LinkTabs links={linkTabsData} />
-        <div>
-          {!loading && userList === "following" ? followingJSX : followersJSX}
-        </div>
-      </>
-    )
-  }
-
-  return <Navigate to={`/app/${username}`} />
+    return <Navigate to={`/app/${username}`} />
 }
 
 export default UserList

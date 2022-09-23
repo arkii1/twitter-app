@@ -1,120 +1,125 @@
-import React, { useEffect, useState, useRef } from "react"
-import "./styles.css"
-import propTypes from "prop-types"
-import uniqid from "uniqid"
-import { Link } from "react-router-dom"
-import { follow, isFollowing, unfollow } from "../../utility/firestoreUtils"
-import { useDetails } from "../../contexts/UserDetailsContext"
-import ImageContainer from "../common/ImageContainer"
-import Button from "../common/Button"
-import ProfileModal from "./ProfileModal"
+import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import propTypes from 'prop-types'
+import uniqid from 'uniqid'
+
+import { useDetails } from '../../contexts/UserDetailsContext'
+import { follow, isFollowing, unfollow } from '../../utility/firestoreUtils'
+import Button from '../common/Button'
+import ImageContainer from '../common/ImageContainer'
+import ProfileModal from './ProfileModal'
+import './styles.css'
 
 // Note details is a promise
 function UserCard({ details }) {
-  const { userDetails } = useDetails()
-  const [profileDetails, setProfileDetails] = useState(null)
-  const [following, setFollowing] = useState(null)
-  const [profileModal, setProfileModal] = useState(false)
-  const [modalPos, setModalPos] = useState([0, 0])
-  const imageRef = useRef()
-  const nameRef = useRef()
+    const { userDetails } = useDetails()
+    const [profileDetails, setProfileDetails] = useState(null)
+    const [following, setFollowing] = useState(null)
+    const [profileModal, setProfileModal] = useState(false)
+    const [modalPos, setModalPos] = useState([0, 0])
+    const imageRef = useRef()
+    const nameRef = useRef()
 
-  const handleFollow = async () => {
-    await follow(userDetails.userID, profileDetails.userID)
-    setFollowing(true)
-  }
-
-  const handleUnfollow = async () => {
-    await unfollow(userDetails.userID, profileDetails.userID)
-    setFollowing(false)
-  }
-
-  const handleModalOn = (ref) => {
-    setProfileModal(true)
-    const { x, y } = ref.current.getBoundingClientRect()
-    setModalPos([x, y])
-  }
-
-  const handleModalOff = () => {
-    setProfileModal(false)
-  }
-
-  useEffect(() => {
-    const init = async () => {
-      const newDetails = await details
-      setProfileDetails(newDetails)
-      const newFollowing = await isFollowing(
-        userDetails.userID,
-        newDetails.userID
-      )
-      setFollowing(newFollowing)
+    const handleFollow = async () => {
+        await follow(userDetails.userID, profileDetails.userID)
+        setFollowing(true)
     }
-    init()
-  }, [details, userDetails, profileDetails])
 
-  return (
-    profileDetails &&
-    profileDetails.userID !== userDetails.userID &&
-    following !== null && (
-      <>
-        {profileModal && (
-          <span
-            onMouseLeave={handleModalOff}
-            onMouseEnter={() => handleModalOn(imageRef)}
-          >
-            <ProfileModal details={profileDetails} pos={modalPos} />
-          </span>
-        )}
-        <li
-          className="user-card d-flex justify-content-between align-items-start w-100 px-2 py-3"
-          key={uniqid()}
-          onMouseLeave={handleModalOff}
-        >
-          <div className="d-flex justify-content-start align-items-start gap-2">
-            <Link
-              to={`/app/${profileDetails.username}`}
-              className="react-link--none"
-              ref={imageRef}
-              onMouseEnter={() => handleModalOn(imageRef)}
-            >
-              <ImageContainer
-                src={profileDetails.avatarURL}
-                alt=""
-                type="avatar--small"
-              />
-            </Link>
-            <span className="d-flex flex-column justify-content-start align-items-start gap-2">
-              <Link
-                to={`/app/${profileDetails.username}`}
-                className="react-link--none d-flex flex-column gap-1"
-                ref={nameRef}
-                onMouseEnter={() => handleModalOn(nameRef)}
-              >
-                <h3 className="user-card__h3" style={{ color: "black" }}>
-                  {profileDetails.name}
-                </h3>
-                <p className="user-card__username">
-                  @{profileDetails.username}
-                </p>
-              </Link>
-              <p>{profileDetails.bio}</p>
-            </span>
-          </div>
-          <span style={{ width: "6rem" }}>
-            <Button
-              text={following ? "Unfollow" : "Follow"}
-              colours={following ? "light" : "dark"}
-              onClick={following ? handleUnfollow : handleFollow}
-            />
-          </span>
-        </li>
-      </>
+    const handleUnfollow = async () => {
+        await unfollow(userDetails.userID, profileDetails.userID)
+        setFollowing(false)
+    }
+
+    const handleModalOn = (ref) => {
+        setProfileModal(true)
+        const { x, y } = ref.current.getBoundingClientRect()
+        setModalPos([x, y])
+    }
+
+    const handleModalOff = () => {
+        setProfileModal(false)
+    }
+
+    useEffect(() => {
+        const init = async () => {
+            const newDetails = await details
+            setProfileDetails(newDetails)
+            const newFollowing = await isFollowing(
+                userDetails.userID,
+                newDetails.userID,
+            )
+            setFollowing(newFollowing)
+        }
+        init()
+    }, [details, userDetails, profileDetails])
+
+    return (
+        profileDetails &&
+        profileDetails.userID !== userDetails.userID &&
+        following !== null && (
+            <>
+                {profileModal && (
+                    <span
+                        onMouseLeave={handleModalOff}
+                        onMouseEnter={() => handleModalOn(imageRef)}
+                    >
+                        <ProfileModal details={profileDetails} pos={modalPos} />
+                    </span>
+                )}
+                <li
+                    className="user-card d-flex justify-content-between align-items-start w-100 px-2 py-3"
+                    key={uniqid()}
+                    onMouseLeave={handleModalOff}
+                >
+                    <div className="d-flex justify-content-start align-items-start gap-2">
+                        <Link
+                            to={`/app/${profileDetails.username}`}
+                            className="react-link--none"
+                            ref={imageRef}
+                            onMouseEnter={() => handleModalOn(imageRef)}
+                        >
+                            <ImageContainer
+                                src={profileDetails.avatarURL}
+                                alt=""
+                                type="avatar--small"
+                            />
+                        </Link>
+                        <span className="d-flex flex-column justify-content-start align-items-start gap-2">
+                            <Link
+                                to={`/app/${profileDetails.username}`}
+                                className="react-link--none d-flex flex-column gap-1"
+                                ref={nameRef}
+                                onMouseEnter={() => handleModalOn(nameRef)}
+                            >
+                                <h3
+                                    className="user-card__h3"
+                                    style={{ color: 'black' }}
+                                >
+                                    {profileDetails.name}
+                                </h3>
+                                <p className="user-card__username">
+                                    @{profileDetails.username}
+                                </p>
+                            </Link>
+                            <p>{profileDetails.bio}</p>
+                        </span>
+                    </div>
+                    <span style={{ width: '6rem' }}>
+                        <Button
+                            text={following ? 'Unfollow' : 'Follow'}
+                            colours={following ? 'light' : 'dark'}
+                            onClick={following ? handleUnfollow : handleFollow}
+                        />
+                    </span>
+                </li>
+            </>
+        )
     )
-  )
 }
 
 export default UserCard
 
 UserCard.propTypes = {
-  details: propTypes.object,
+    details: propTypes.object,
 }

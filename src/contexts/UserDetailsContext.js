@@ -1,62 +1,64 @@
 import React, {
-  useState,
-  useContext,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react"
-import propTypes from "prop-types"
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react'
+
+import propTypes from 'prop-types'
+
 import {
-  getUserDetailsFromID,
-  createOrUpdateUserDetails,
-} from "../utility/firestoreUtils"
-import { useAuth } from "./AuthContext"
+    createOrUpdateUserDetails,
+    getUserDetailsFromID,
+} from '../utility/firestoreUtils'
+import { useAuth } from './AuthContext'
 
 const UserDetailsContext = React.createContext()
 
 export function useDetails() {
-  return useContext(UserDetailsContext)
+    return useContext(UserDetailsContext)
 }
 
 export function UserDetailsProvider({ children }) {
-  const [userDetails, setUserDetails] = useState()
-  const [loading, setLoading] = useState(true)
-  const { currentUser } = useAuth()
+    const [userDetails, setUserDetails] = useState()
+    const [loading, setLoading] = useState(true)
+    const { currentUser } = useAuth()
 
-  const updateUserDetails = useCallback(
-    async (details) => {
-      await createOrUpdateUserDetails(currentUser.email, details)
-      const updatedDetails = await getUserDetailsFromID(currentUser.uid)
-      setUserDetails(updatedDetails)
-    },
-    [currentUser]
-  )
+    const updateUserDetails = useCallback(
+        async (details) => {
+            await createOrUpdateUserDetails(currentUser.email, details)
+            const updatedDetails = await getUserDetailsFromID(currentUser.uid)
+            setUserDetails(updatedDetails)
+        },
+        [currentUser],
+    )
 
-  const value = useMemo(
-    () => ({ userDetails, updateUserDetails }),
-    [userDetails, updateUserDetails]
-  )
+    const value = useMemo(
+        () => ({ userDetails, updateUserDetails }),
+        [userDetails, updateUserDetails],
+    )
 
-  useEffect(() => {
-    const initCurDetails = async () => {
-      if (currentUser) {
-        setLoading(true)
-        const details = await getUserDetailsFromID(currentUser.uid)
-        if (details) setUserDetails(details)
-        setLoading(false)
-      }
-    }
+    useEffect(() => {
+        const initCurDetails = async () => {
+            if (currentUser) {
+                setLoading(true)
+                const details = await getUserDetailsFromID(currentUser.uid)
+                if (details) setUserDetails(details)
+                setLoading(false)
+            }
+        }
 
-    initCurDetails()
-  }, [currentUser])
+        initCurDetails()
+    }, [currentUser])
 
-  return (
-    <UserDetailsContext.Provider value={value}>
-      {!loading && children}
-    </UserDetailsContext.Provider>
-  )
+    return (
+        <UserDetailsContext.Provider value={value}>
+            {!loading && children}
+        </UserDetailsContext.Provider>
+    )
 }
 
 UserDetailsProvider.propTypes = {
-  children: propTypes.node,
+    children: propTypes.node,
 }
