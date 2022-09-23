@@ -1,7 +1,7 @@
 import React from "react"
 import propTypes from "prop-types"
 
-import "./DynamicTextArea.css"
+import "./styles.css"
 
 import TextareaAutosize from "react-textarea-autosize"
 

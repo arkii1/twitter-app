@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react"
-import "./ImageInput.css"
+import "./styles.css"
 import propTypes from "prop-types"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

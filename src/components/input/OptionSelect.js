@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
-import "./LabelAndInput.css"
 import propTypes from "prop-types"
 import uniqid from "uniqid"
-import "./OptionSelect.css"
-import useToggle from "../hooks/useToggle"
+import "./styles.css"
+import useToggle from "../../hooks/useToggle"
 
 function OptionSelect({
   labelText,

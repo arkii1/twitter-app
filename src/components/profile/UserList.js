@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
-import "./UserList.css"
+import "./styles.css"
 import { useParams, Navigate } from "react-router-dom"
 import {
   getUserDetailsFromIDArray,
   getUserDetailsFromUsername,
-} from "../utility/firestoreUtils"
+} from "../../utility/firestoreUtils"
 import UserCard from "./UserCard"
-import LinkTabs from "./LinkTabs"
+import LinkTabs from "../common/LinkTabs"
 
 function UserList() {
   const { id: username, userList } = useParams()

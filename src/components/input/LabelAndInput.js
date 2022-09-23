@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from "react"
-import "./LabelAndInput.css"
+import "./styles.css"
 import propTypes from "prop-types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import useToggle from "../hooks/useToggle"
+import useToggle from "../../hooks/useToggle"
 
 function LabelAndInput({
   labelText,

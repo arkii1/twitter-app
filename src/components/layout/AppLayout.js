@@ -2,7 +2,7 @@ import React from "react"
 import "./AppLayout.css"
 import { Outlet } from "react-router-dom"
 import Navbar from "./Navbar"
-import Protected from "./Protected"
+import Protected from "../utility/Protected"
 
 function AppLayout() {
   return (

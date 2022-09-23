@@ -1,5 +1,5 @@
 import React from "react"
-import "./LinkTabs.css"
+import "./styles.css"
 import { Link } from "react-router-dom"
 import propTypes from "prop-types"
 

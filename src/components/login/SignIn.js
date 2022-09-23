@@ -1,11 +1,11 @@
 import React, { useRef } from "react"
 import "./SignIn.css"
 import { Link, Navigate } from "react-router-dom"
-import LabelAndInput from "../components/LabelAndInput"
-import googleLogo from "../assets/google-logo.svg"
-import twitterAnim from "../assets/twitter-anim.gif"
-import Button from "../components/Button"
-import { useAuth } from "../contexts/AuthContext"
+import LabelAndInput from "../input/LabelAndInput"
+import googleLogo from "../../assets/google-logo.svg"
+import twitterAnim from "../../assets/twitter-anim.gif"
+import Button from "../common/Button"
+import { useAuth } from "../../contexts/AuthContext"
 
 function SignIn() {
   const { googleSignIn, signInWithEmail, currentUser } = useAuth()

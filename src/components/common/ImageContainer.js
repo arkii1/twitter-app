@@ -1,5 +1,5 @@
 import React from "react"
-import "./ImageContainer.css"
+import "./styles.css"
 import propTypes from "prop-types"
 
 function ImageContainer({ src, alt, type, hover = false }) {

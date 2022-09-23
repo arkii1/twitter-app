@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react"
 import "./SignUp.css"
 import { Link, Navigate } from "react-router-dom"
-import twitterAnim from "../assets/twitter-anim.gif"
-import Button from "../components/Button"
-import LabelAndInput from "../components/LabelAndInput"
-import { useAuth } from "../contexts/AuthContext"
+import twitterAnim from "../../assets/twitter-anim.gif"
+import Button from "../common/Button"
+import LabelAndInput from "../input/LabelAndInput"
+import { useAuth } from "../../contexts/AuthContext"
 
 function SignUp() {
   const emailRef = useRef()

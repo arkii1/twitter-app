@@ -3,6 +3,7 @@ import propTypes from "prop-types"
 
 import { CircularProgressbar } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
+import "./styles.css"
 
 function CircleProgressBar({ percentage, text }) {
   let size = "1.4rem"

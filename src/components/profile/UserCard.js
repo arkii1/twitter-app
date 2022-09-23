@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react"
-import "./UserCard.css"
+import "./styles.css"
 import propTypes from "prop-types"
 import uniqid from "uniqid"
 import { Link } from "react-router-dom"
-import { follow, isFollowing, unfollow } from "../utility/firestoreUtils"
-import { useDetails } from "../contexts/UserDetailsContext"
-import ImageContainer from "./ImageContainer"
-import Button from "./Button"
+import { follow, isFollowing, unfollow } from "../../utility/firestoreUtils"
+import { useDetails } from "../../contexts/UserDetailsContext"
+import ImageContainer from "../common/ImageContainer"
+import Button from "../common/Button"
 import ProfileModal from "./ProfileModal"
 
 // Note details is a promise

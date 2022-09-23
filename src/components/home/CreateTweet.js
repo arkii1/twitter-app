@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react"
 
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons"
-import "./CreateTweet.css"
+import "./styles.css"
 
-import { useDetails } from "../contexts/UserDetailsContext"
-import { createTweet } from "../utility/firestoreUtils"
+import { useDetails } from "../../contexts/UserDetailsContext"
+import { createTweet } from "../../utility/firestoreUtils"
 
-import ImageContainer from "./ImageContainer"
-import DynamicTextArea from "./DynamicTextArea"
-import Button from "./Button"
-import CircleProgressBar from "./CircleProgressBar"
+import ImageContainer from "../common/ImageContainer"
+import DynamicTextArea from "../input/DynamicTextArea"
+import Button from "../common/Button"
+import CircleProgressBar from "../input/CircleProgressBar"
 
 function CreateTweet() {
   const { userDetails } = useDetails()

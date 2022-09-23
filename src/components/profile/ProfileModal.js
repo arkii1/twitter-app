@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import "./ProfileModal.css"
+import "./styles.css"
 import propTypes from "prop-types"
 import { Link } from "react-router-dom"
-import { follow, unfollow, isFollowing } from "../utility/firestoreUtils"
-import ImageContainer from "./ImageContainer"
-import Button from "./Button"
-import { useDetails } from "../contexts/UserDetailsContext"
+import { follow, unfollow, isFollowing } from "../../utility/firestoreUtils"
+import ImageContainer from "../common/ImageContainer"
+import Button from "../common/Button"
+import { useDetails } from "../../contexts/UserDetailsContext"
 import FollowingFollowersLinks from "./FollowingFollowersLinks"
 
 function ProfileModal({ details, pos }) {
