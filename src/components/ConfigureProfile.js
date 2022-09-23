@@ -214,7 +214,7 @@ function ConfigureProfile({ exit }) {
             className="p-3 d-flex flex-column justify-content-center align-items-center"
           >
             {error && <p className="form-error">{error}</p>}
-            <Button text="Save" type="submit" colours="dark" />
+            <Button text="Save" type="submit" colours="dark" width="100%" />
           </span>
         </span>
       </form>
