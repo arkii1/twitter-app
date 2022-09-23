@@ -1,3 +1,4 @@
+@import url("../index.css");
 .image-container--bg {
     height: min(15rem, 20vh);
     width: 100%;
@@ -43,3 +44,4 @@
     max-width: 100%;
     max-height: 30rem;
 }
+
