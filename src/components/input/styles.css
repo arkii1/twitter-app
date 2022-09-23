@@ -1,0 +1,126 @@
+@import url("../../index.css");
+
+.dynamic-text-area__text-area {
+    resize: none;
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    overflow-y: hidden;
+}
+
+.image-input--avatar {
+    height: 8rem;
+    width: 8rem;
+    position: relative;
+    background-color: white;
+
+}
+.image-input--background {
+    height: min(15rem, 20vh);
+    width: 100%;
+    position: relative;
+    background-color: white;
+}
+
+.image-input__img--avatar {
+    cursor:default;
+}
+
+.image-input__img--avatar {
+    height: 8rem;
+    width: 8rem;
+}
+
+.image-input__img--background {
+    object-fit: cover;
+}
+
+.image-input__camera {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(var(--dark-gray), 0.75);
+    cursor: pointer;
+}
+
+.image-input__camera:hover {
+    background-color: rgba(var(--dark-gray), 0.5);
+    color: rgba(var(--black), 0.75);
+}
+
+.label-and-input--active {
+    border: solid 1px rgb(var(--blue));
+}
+
+.label-and-input--inactive {
+    border: solid 1px rgb(var(--light-gray));
+}
+
+.label-and-input__label--has-input {
+    transition: 0.1s;
+    pointer-events: none;
+    color: rgb(var(--light-gray));
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;    
+    padding-left: 0.125rem;
+}
+
+.label-and-input__label--inactive {
+    transform: translate(0.1rem, 1rem);
+    transition: 0.1s;
+    pointer-events: none;
+    color: rgb(var(--light-gray));
+    font-size: 1rem;
+    padding-left: 0.125rem;
+}
+
+.label-and-input__label--active {
+    transition: 0.1s;
+    color: rgb(var(--blue));
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;
+    padding-left: 0.125rem;
+}
+
+.label-and-input__input {
+    outline: none;
+    font-size: 1rem;
+}
+
+.label-and-input__char-count--inactive {
+    opacity: 0;
+}
+
+.label-and-input__char-count--active {
+    opacity: 1;
+}
+
+.option-select--active {
+    border: solid 1px rgb(var(--blue));
+}
+
+.option-select--inactive {
+    border: solid 1px rgb(var(--light-gray));
+}
+
+.option-select__label--inactive {
+    font-size: 0.7rem;
+    transition: 0.1s;
+    pointer-events: none;
+    color: rgb(var(--light-gray));
+}
+
+.option-select__label--active {
+    font-size: 0.7rem;
+    transition: 0.1s;
+    color: rgb(var(--blue));
+}
+
+.option-select__select {
+    border: none;
+    outline: none;
+    background: none;
+}

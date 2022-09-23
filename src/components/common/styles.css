@@ -1,0 +1,198 @@
+@import url("../../index.css");
+
+.button--light,
+.button--dark, 
+.button--blue,
+.button--blue--reverse,
+.button--inherit {
+    outline: none;
+    border-radius: 20px;
+    transition: 0.1s;
+    font-weight: bold;
+    font-size: 0.9rem;
+    height: max-content;
+} 
+
+.button--dark {
+    border: none;
+    background-color: rgb(var(--black));
+    color: rgb(var(--white));
+}
+
+.button--light  {
+  border: 1px solid rgb(var(--light-gray));
+  background-color: rgb(var(--white));
+  color: rgb(var(--black));
+}
+
+.button--blue {
+    border: 1px solid rgb(var(--blue));
+    background-color: rgb(var(--blue));
+    color: rgb(var(--white));
+}
+
+.button--blue--reverse  {
+    border: 1px solid rgb(var(--white));
+    background-color: rgb(var(--white));
+    color: rgb(var(--blue));
+}
+
+.button--light:hover  {
+    background-color: rgba(var(--black), 0.1);
+    transition: 0.1s;
+}
+
+.button--dark:hover  {
+    background-color: rgba(var(--black), 0.9);
+    transition: 0.1s;
+}
+
+.button--blue:hover  {
+    background-color: rgba(var(--blue), 0.8);
+    border: 1px solid rgba(var(--blue), 0.8);
+    transition: 0.1s;
+}
+
+.button--blue--reverse:hover  {
+    background-color: rgba(var(--black), 0.1);
+    border: 1px solid rgba(var(--black), 0.1);
+    transition: 0.1s;
+}
+
+.button--inherit {
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    outline: none;
+}
+
+.image-container--bg {
+    height: min(15rem, 20vh);
+    width: 100%;
+    position: relative;
+    background-color: white;
+}
+
+.image-container__img--bg {
+    object-fit: cover;
+    width: 100%;
+}
+
+.image-container--avatar {
+    height: 8rem;
+    width: 8rem;
+    position: relative;
+    background-color: white;
+}
+
+.image-container__img--avatar {
+    height: 8rem;
+    width: 8rem;
+    border: solid 4px white;
+}
+
+.image-container--avatar--small {
+    height: 3rem;
+    width: 3rem;
+    position: relative;
+    background-color: white;
+}
+
+.image-container__img--avatar--small {
+    height: 3rem;
+    width: 3rem;
+}
+
+.image-container--create-tweet {
+    background-color: white;
+}
+
+.image-container__img--create-tweet {
+    max-width: 100%;
+    max-height: 30rem;
+}
+
+
+
+.link-tabs__link,
+.link-tabs__link--active {
+    flex-grow: 1;   
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.link-tabs__link{
+    color: rgb(var(--light-gray));
+}
+
+.link-tabs__link--active {
+    color: rgb(var(--black));
+}
+
+.link-tabs__link:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+    color: rgb(var(--light-gray));
+}
+
+.link-tabs__link--active:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+    color: rgb(var(--black));
+}
+
+.links-tabs__line--active,
+.links-tabs__line--inactive {
+    height: 4px;
+    width: 50%;
+    background-color: rgb(var(--blue));
+    bottom: 0;
+}
+
+.links-tabs__line--inactive {
+    opacity: 0;
+}
+
+.tweet-card {
+    transition: 0.2s;
+}
+
+.tweet-card:hover {
+    background-color: rgba(var(--light-gray), 0.05);
+    cursor: pointer;
+}
+
+.tweet-card__comment,
+.tweet-card__retweet,
+.tweet-card__like,
+.tweet-card__share,
+.tweet-card__ellipsis {
+    color: rgb(var(--light-gray));
+}
+
+
+.tweet-card__comment:hover,
+.tweet-card__share:hover,
+.tweet-card__ellipsis:hover {
+    color: rgb(var(--blue));
+}
+
+.tweet-card__comment:hover > button,
+.tweet-card__share:hover > button,
+.tweet-card__ellipsis:hover > button {
+    background-color: rgba(var(--blue), 0.1);
+}
+
+.tweet-card__retweet:hover {
+    color: rgb(var(--green));
+}
+
+.tweet-card__retweet:hover > button {
+    background-color: rgba(var(--green), 0.1);
+}
+
+.tweet-card__like:hover{
+    color: rgb(var(--red));
+}
+
+.tweet-card__like:hover > button {
+    background-color: rgba(var(--red), 0.1);
+}

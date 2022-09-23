@@ -1,4 +1,11 @@
-@import url("../index.css");
+@import url("../../index.css");
+
+.layout {
+    display: grid;
+    grid-template-columns: 5fr 8fr 5fr;
+    width: min(100vw, 80rem);
+    background-color: white;
+}
 
 .my-modal {
     background: rgba(var(--light-gray), 0.9);
@@ -39,4 +46,8 @@
 /* Handle on hover */
 .my-modal__content::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.navbar {
+    background-color: rgba(0,0,0,0);
 }

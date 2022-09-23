@@ -1,0 +1,52 @@
+@import url("../../index.css");
+
+.configure-profile__top {
+    position: fixed;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.profile__h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.profile__p {
+    font-size: 0.9rem;
+}
+
+.profile-modal {
+    background-color: white;
+    z-index: 999;
+    height: max-content;
+    max-width: 20rem;
+}
+
+.profile-modal__h4 {
+    color: black;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.user-card__h3 {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.user-card__username {
+    color: rgb(var(--light-gray));
+    font-size: 0.8rem;
+}
+
+.user-card__bio {
+    font-size: 0.91rem;
+}
+
+.user-card {
+    transition: 0.2s;
+}
+
+.user-card:hover {
+    background-color: rgba(var(--light-gray), 0.1);
+}
+

@@ -1,6 +1,0 @@
-.layout {
-    display: grid;
-    grid-template-columns: 5fr 10fr 5fr;
-    width: min(100vw, 80rem);
-    background-color: white;
-}
