@@ -23,32 +23,16 @@ import ImageContainer from './ImageContainer'
 import './styles.css'
 
 function TweetCard({ tweet }) {
-    const [tweetDetails, setTweetDetails] = useState(tweet)
     const { userDetails } = useDetails()
+
+    const nameRef = useRef()
+    const imageRef = useRef()
+
+    const [tweetDetails, setTweetDetails] = useState(tweet)
     const [tweetUserDetails, setTweetUserDetails] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
-    const imageRef = useRef()
-    const nameRef = useRef()
     const [liked, setLiked] = useState(null)
-
-    useEffect(() => {
-        const init = async () => {
-            const details = await getUserDetailsFromID(tweet.userID)
-            setTweetUserDetails(details)
-
-            if (imageRef.current) {
-                const { x, y } = imageRef.current.getBoundingClientRect()
-                setModalPos([x, y])
-            }
-
-            if (liked === null) {
-                const like = await likesTweet(userDetails.userID, tweet.id)
-                setLiked(like)
-            }
-        }
-        init()
-    }, [liked, tweet, userDetails])
 
     const handleModalOn = (ref) => {
         setProfileModal(true)
@@ -76,6 +60,24 @@ function TweetCard({ tweet }) {
         }
         setLiked(like)
     }
+
+    useEffect(() => {
+        const init = async () => {
+            const details = await getUserDetailsFromID(tweet.userID)
+            setTweetUserDetails(details)
+
+            if (imageRef.current) {
+                const { x, y } = imageRef.current.getBoundingClientRect()
+                setModalPos([x, y])
+            }
+
+            if (liked === null) {
+                const like = await likesTweet(userDetails.userID, tweet.id)
+                setLiked(like)
+            }
+        }
+        init()
+    }, [liked, tweet, userDetails])
 
     return (
         tweetUserDetails !== null && (

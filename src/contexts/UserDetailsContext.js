@@ -21,9 +21,10 @@ export function useDetails() {
 }
 
 export function UserDetailsProvider({ children }) {
+    const { currentUser } = useAuth()
+
     const [userDetails, setUserDetails] = useState()
     const [loading, setLoading] = useState(true)
-    const { currentUser } = useAuth()
 
     const updateUserDetails = useCallback(
         async (details) => {

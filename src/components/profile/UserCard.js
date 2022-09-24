@@ -18,12 +18,14 @@ import './styles.css'
 // Note details is a promise
 function UserCard({ details }) {
     const { userDetails } = useDetails()
+
+    const imageRef = useRef()
+    const nameRef = useRef()
+
     const [profileDetails, setProfileDetails] = useState(null)
     const [following, setFollowing] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
-    const imageRef = useRef()
-    const nameRef = useRef()
 
     const handleFollow = async () => {
         await follow(userDetails.userID, profileDetails.userID)

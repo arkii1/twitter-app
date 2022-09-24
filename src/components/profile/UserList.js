@@ -11,8 +11,19 @@ import './styles.css'
 
 function UserList() {
     const { id: username, userList } = useParams()
-    const [loading, setLoading] = useState(true)
 
+    const linkTabsData = [
+        {
+            link: `/app/${username}/community/following`,
+            text: 'Following',
+        },
+        {
+            link: `/app/${username}/community/followers`,
+            text: 'Followers',
+        },
+    ]
+
+    const [loading, setLoading] = useState(true)
     const [followingJSX, setFollowingJSX] = useState()
     const [followersJSX, setFollowersJSX] = useState()
 
@@ -37,17 +48,6 @@ function UserList() {
         }
         init()
     }, [username])
-
-    const linkTabsData = [
-        {
-            link: `/app/${username}/community/following`,
-            text: 'Following',
-        },
-        {
-            link: `/app/${username}/community/followers`,
-            text: 'Followers',
-        },
-    ]
 
     if (userList === 'following' || userList === 'followers') {
         return (

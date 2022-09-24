@@ -26,12 +26,14 @@ import './styles.css'
 
 function Profile() {
     const { userDetails } = useDetails()
+    const { id } = useParams()
+
+    const isUsersPage = id === userDetails.username
+
     const [configureProfile, setConfigureProfile] = useState(!userDetails)
     const [details, setDetails] = useState(userDetails)
     const [loading, setLoading] = useState(true)
     const [following, setFollowing] = useState(false)
-    const { id } = useParams()
-    const isUsersPage = id === userDetails.username
     const [tweetData, setTweetData] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [tweetLength, setTweetLength] = useState(10)

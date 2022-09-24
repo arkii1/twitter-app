@@ -16,6 +16,7 @@ function LabelAndInput({
     textLimit,
 }) {
     const [active, toggleActive] = useToggle()
+
     const [divClass, setDivClass] = useState('label-and-input--inactive')
     const [labelClass, setLabelClass] = useState(
         'label-and-input__label--inactive',
@@ -23,6 +24,18 @@ function LabelAndInput({
     const [inputValue, setInputValue] = useState(startValue || '')
     const startChar = startValue ? startValue.length : 0
     const [charCount, setCharCount] = useState(startChar)
+    const [curInputType, setCurInputType] = useState(inputType)
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value)
+        const newCount = e.target.value.length
+        setCharCount(newCount)
+    }
+
+    const changeCurInputType = () => {
+        if (curInputType === 'password') setCurInputType('text')
+        else setCurInputType('password')
+    }
 
     useEffect(() => {
         const newDivClass = active
@@ -39,18 +52,6 @@ function LabelAndInput({
         setDivClass(newDivClass)
         setLabelClass(newLabelClass)
     }, [active, inputValue])
-
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value)
-        const newCount = e.target.value.length
-        setCharCount(newCount)
-    }
-
-    const [curInputType, setCurInputType] = useState(inputType)
-    const changeCurInputType = () => {
-        if (curInputType === 'password') setCurInputType('text')
-        else setCurInputType('password')
-    }
 
     return (
         <div

@@ -12,6 +12,7 @@ import './styles.css'
 
 function CreateTweet() {
     const { userDetails } = useDetails()
+
     const textInputRef = useRef()
     const fileInputRef = useRef()
 

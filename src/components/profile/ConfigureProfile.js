@@ -30,8 +30,9 @@ function ConfigureProfile({ exit }) {
     const dayRef = useRef()
     const yearRef = useRef()
     const avatarRef = useRef()
-    const bgRef = useRef()
     const [error, setError] = useState('')
+    const bgRef = useRef()
+
     const errorRef = useRef()
 
     const handleExit = () => {

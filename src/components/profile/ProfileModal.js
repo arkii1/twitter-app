@@ -16,12 +16,14 @@ import './styles.css'
 
 function ProfileModal({ details, pos }) {
     const { userDetails } = useDetails()
-    const [following, setFollowing] = useState(null)
+
     const style = {
         position: 'absolute',
         left: `calc(${pos[0]}px)`,
         top: `calc(${pos[1]}px + 3rem)`,
     }
+
+    const [following, setFollowing] = useState(null)
 
     const handleFollow = async () => {
         await follow(userDetails.userID, details.userID)
@@ -32,11 +34,10 @@ function ProfileModal({ details, pos }) {
         await unfollow(userDetails.userID)
     }
 
-    const init = async () => {
+    ;(async () => {
         const newFol = await isFollowing(userDetails.userID, details.userID)
         setFollowing(newFol)
-    }
-    init()
+    })()
 
     return (
         following !== null && (

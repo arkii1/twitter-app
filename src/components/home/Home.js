@@ -12,8 +12,8 @@ import './styles.css'
 function Home() {
     const { logout } = useAuth()
     const { userDetails } = useDetails()
-    const [configureProfile, setConfigureProfile] = useState(!userDetails)
 
+    const [configureProfile, setConfigureProfile] = useState(!userDetails)
     const [tweets, setTweets] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [tweetsLength, setTweetsLength] = useState(10)
