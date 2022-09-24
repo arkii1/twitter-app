@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { createTweet } from '../../utility/firestoreUtils'
+import { createTweet } from '../../utility/firestore/tweetFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import CircleProgressBar from '../input/CircleProgressBar'

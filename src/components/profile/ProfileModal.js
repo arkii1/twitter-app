@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { follow, isFollowing, unfollow } from '../../utility/firestoreUtils'
+import { follow, isFollowing, unfollow } from '../../utility/firestore/firestoreUtils'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import FollowingFollowersLinks from './FollowingFollowersLinks'

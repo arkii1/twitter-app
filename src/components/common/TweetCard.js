@@ -12,11 +12,11 @@ import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
 import {
-    getUserDetailsFromID,
     likeTweet,
     likesTweet,
     unlikeTweet,
-} from '../../utility/firestoreUtils'
+} from '../../utility/firestore/tweetFirestore'
+import { getUserDetailsFromID } from '../../utility/firestore/userDetailsFirestore'
 import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
 import ImageContainer from './ImageContainer'

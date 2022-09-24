@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import {
     getUserDetailsFromIDArray,
     getUserDetailsFromUsername,
-} from '../../utility/firestoreUtils'
+} from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
 import UserCard from './UserCard'
 import './styles.css'

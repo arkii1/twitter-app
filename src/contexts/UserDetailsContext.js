@@ -11,7 +11,7 @@ import propTypes from 'prop-types'
 import {
     createOrUpdateUserDetails,
     getUserDetailsFromID,
-} from '../utility/firestoreUtils'
+} from '../utility/firestore/firestoreUtils'
 import { useAuth } from './AuthContext'
 
 const UserDetailsContext = React.createContext()

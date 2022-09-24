@@ -5,7 +5,11 @@ import propTypes from 'prop-types'
 import uniqid from 'uniqid'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { follow, isFollowing, unfollow } from '../../utility/firestoreUtils'
+import {
+    follow,
+    isFollowing,
+    unfollow,
+} from '../../utility/firestore/tweetFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import ProfileModal from './ProfileModal'

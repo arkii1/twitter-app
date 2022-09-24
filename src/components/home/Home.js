@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useAuth } from '../../contexts/AuthContext'
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { getTweetsFromUsersArr } from '../../utility/firestoreUtils'
+import { getTweetsFromUsersArr } from '../../utility/firestore/tweetFirestore'
 import TweetList from '../common/TweetList'
 import ConfigureProfile from '../profile/ConfigureProfile'
 import CreateTweet from './CreateTweet'

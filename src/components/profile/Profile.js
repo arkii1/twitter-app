@@ -12,10 +12,10 @@ import { useDetails } from '../../contexts/UserDetailsContext'
 import {
     follow,
     getTweetsFromUsersArr,
-    getUserDetailsFromUsername,
     isFollowing,
     unfollow,
-} from '../../utility/firestoreUtils'
+} from '../../utility/firestore/tweetFirestore'
+import { getUserDetailsFromUsername } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import LinkTabs from '../common/LinkTabs'
