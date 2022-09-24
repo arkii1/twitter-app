@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
 import TweetList from './components/common/TweetList'
-import Account from './components/home/Home'
+import Home from './components/home/Home'
 import AppLayout from './components/layout/AppLayout'
 import Modal from './components/layout/Modal'
 import SignIn from './components/login/SignIn'
@@ -30,11 +30,7 @@ function App() {
                     <UserDetailsProvider>
                         <Routes>
                             <Route path="app" element={<AppLayout />}>
-                                <Route
-                                    index
-                                    path="home"
-                                    element={<Account />}
-                                />
+                                <Route index path="home" element={<Home />} />
                                 <Route path=":id" element={<Profile />}>
                                     <Route
                                         path="tweets/:tweetList"
