@@ -32,6 +32,24 @@ function TweetCard({ tweet }) {
     const nameRef = useRef()
     const [liked, setLiked] = useState(null)
 
+    useEffect(() => {
+        const init = async () => {
+            const details = await getUserDetailsFromID(tweet.userID)
+            setTweetUserDetails(details)
+
+            if (imageRef.current) {
+                const { x, y } = imageRef.current.getBoundingClientRect()
+                setModalPos([x, y])
+            }
+
+            if (liked === null) {
+                const like = await likesTweet(userDetails.userID, tweet.id)
+                setLiked(like)
+            }
+        }
+        init()
+    }, [liked, tweet, userDetails])
+
     const handleModalOn = (ref) => {
         setProfileModal(true)
         const { x, y } = ref.current.getBoundingClientRect()
@@ -42,29 +60,15 @@ function TweetCard({ tweet }) {
         setProfileModal(false)
     }
 
-    useEffect(() => {
-        const handleDetails = async () => {
-            const details = await getUserDetailsFromID(tweet.userID)
-            setTweetUserDetails(details)
-            const like = await likesTweet(userDetails.userID, tweet.id)
-            setLiked(like)
-            if (imageRef.current) {
-                const { x, y } = imageRef.current.getBoundingClientRect()
-                setModalPos([x, y])
-            }
-        }
-        handleDetails()
-    }, [tweet, tweetUserDetails, liked, userDetails])
-
     const handleLikeTweet = async () => {
         const like = !liked
         if (like) {
-            likeTweet(userDetails.userID, tweet.id)
+            await likeTweet(userDetails.userID, tweet.id)
             const newTweetDetails = tweetDetails
             newTweetDetails.likes.push(userDetails.userID)
             setTweetDetails(newTweetDetails)
         } else {
-            unlikeTweet(userDetails.id, tweet.id)
+            await unlikeTweet(userDetails.userID, tweet.id)
             const newTweetDetails = tweetDetails
             const index = newTweetDetails.likes.indexOf(userDetails.userID)
             newTweetDetails.likes.splice(index, 1)
@@ -163,7 +167,11 @@ function TweetCard({ tweet }) {
                                     {tweet.retweets.length}{' '}
                                 </span>
                             </span>
-                            <span className="tweet-card__like d-flex justify-content-start align-items-center gap-1">
+                            <span
+                                className={`tweet-card__like--${
+                                    liked ? 'liked' : 'unliked'
+                                } d-flex justify-content-start align-items-center gap-1`}
+                            >
                                 <Button
                                     faLogo={faHeart}
                                     size="1.1rem"

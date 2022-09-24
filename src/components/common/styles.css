@@ -162,10 +162,14 @@
 
 .tweet-card__comment,
 .tweet-card__retweet,
-.tweet-card__like,
+.tweet-card__like--unliked,
 .tweet-card__share,
 .tweet-card__ellipsis {
     color: rgb(var(--light-gray));
+}
+
+.tweet-card__like--liked {
+    color: rgb(var(--red));
 }
 
 
@@ -189,10 +193,12 @@
     background-color: rgba(var(--green), 0.1);
 }
 
-.tweet-card__like:hover{
+
+.tweet-card__like--unliked:hover {
     color: rgb(var(--red));
 }
 
-.tweet-card__like:hover > button {
+.tweet-card__like--liked:hover > button,
+.tweet-card__like--unliked:hover > button {
     background-color: rgba(var(--red), 0.1);
 }
