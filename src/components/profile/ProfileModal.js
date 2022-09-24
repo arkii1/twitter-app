@@ -8,7 +8,7 @@ import {
     follow,
     isFollowing,
     unfollow,
-} from '../../utility/firestore/tweetFirestore'
+} from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import FollowingFollowersLinks from './FollowingFollowersLinks'

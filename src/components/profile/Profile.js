@@ -9,13 +9,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
+import { getTweetsFromUsersArr } from '../../utility/firestore/tweetFirestore'
 import {
     follow,
-    getTweetsFromUsersArr,
+    getUserDetailsFromUsername,
     isFollowing,
     unfollow,
-} from '../../utility/firestore/tweetFirestore'
-import { getUserDetailsFromUsername } from '../../utility/firestore/userDetailsFirestore'
+} from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import LinkTabs from '../common/LinkTabs'
