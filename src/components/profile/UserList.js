@@ -36,16 +36,15 @@ function UserList() {
             setLoading(false)
         }
         init()
-        console.log('Init')
     }, [username])
 
     const linkTabsData = [
         {
-            link: `/app/${username}/following`,
+            link: `/app/${username}/community/following`,
             text: 'Following',
         },
         {
-            link: `/app/${username}/followers`,
+            link: `/app/${username}/community/followers`,
             text: 'Followers',
         },
     ]
