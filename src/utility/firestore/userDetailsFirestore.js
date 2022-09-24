@@ -99,3 +99,29 @@ export async function usernameAlreadyExists(username, id) {
     })
     return qArr.length > 0
 }
+
+export async function follow(userID, followID) {
+    const userDetails = await getUserDetailsFromID(userID)
+    const followDetails = await getUserDetailsFromID(followID)
+    userDetails.following.push(followID)
+    followDetails.followers.push(userID)
+    await createOrUpdateUserDetails(userDetails.email, userDetails)
+    await createOrUpdateUserDetails(followDetails.email, followDetails)
+}
+
+export async function unfollow(userID, followID) {
+    const userDetails = await getUserDetailsFromID(userID)
+    const followDetails = await getUserDetailsFromID(followID)
+    const index1 = userDetails.following.indexOf(followID)
+    userDetails.following.splice(index1, 1)
+    const index2 = followDetails.followers.indexOf(userID)
+    followDetails.followers.splice(index2, 1)
+    await createOrUpdateUserDetails(userDetails.email, userDetails)
+    await createOrUpdateUserDetails(followDetails.email, followDetails)
+}
+
+export async function isFollowing(userID, followID) {
+    const userDetails = await getUserDetailsFromID(userID)
+    const index = userDetails.following.indexOf(followID)
+    return index > -1
+}
