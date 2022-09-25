@@ -35,7 +35,7 @@ function CreateTweet() {
 
     const handleCreateTweet = () => {
         const text = textInputRef.current.value
-        createTweet(userDetails.userID, null, [], text, src)
+        createTweet(userDetails.id, null, text, src)
     }
 
     const handleChange = () => {
