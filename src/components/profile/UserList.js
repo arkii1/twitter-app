@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import {
-    getUserDetailsFromIDArray,
-    getUserDetailsFromUsername,
-} from '../../utility/firestore/userDetailsFirestore'
+import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
+import { getUserDetailsFromUsername } from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
 import UserCard from './UserCard'
 import './styles.css'
@@ -30,10 +28,10 @@ function UserList() {
     useEffect(() => {
         const init = async () => {
             const details = await getUserDetailsFromUsername(username)
-            const followingData = await getUserDetailsFromIDArray(
+            const followingData = await getTweetsFromUserArray(
                 details.following,
             )
-            const followersData = await getUserDetailsFromIDArray(
+            const followersData = await getTweetsFromUserArray(
                 details.followers,
             )
             const newFollowingJSX = followingData.map((f) => (
