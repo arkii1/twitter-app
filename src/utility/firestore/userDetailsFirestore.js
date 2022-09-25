@@ -13,28 +13,36 @@ import { firestore } from '../../firebase'
 
 const db = firestore
 
-export async function getUserDetailsFromID(id) {
-    const userDetailsRef = collection(db, 'userDetails')
-    const q = await query(userDetailsRef, where('userID', '==', id))
-    const queryResult = await getDocs(q)
-    const qArr = []
-    queryResult.forEach((d) => {
-        qArr.push(d.data())
-    })
-
-    if (qArr > 1)
-        return console.log(
-            'Two documents in userDetails have the same userID. id: ',
-            qArr[0].userID,
-        )
-    if (qArr[0]) {
-        return qArr[0]
+export async function createUserDetails(id, details) {
+    const today = new Date()
+    const day = String(today.getDate())
+    const month = today.toLocaleString('default', { month: 'long' })
+    const year = today.getFullYear()
+    const newDetails = {
+        ...details,
+        id,
+        following: [],
+        followers: [],
+        tweets: [],
+        likedTweets: [],
+        createdAt: {
+            day,
+            month,
+            year,
+        },
     }
-    return null
+    await setDoc(doc(db, 'userDetails', id), newDetails)
+    return newDetails
 }
 
-export function getUserDetailsFromIDArray(ids) {
-    return ids.map((id) => getUserDetailsFromID(id))
+// eslint-disable-next-line no-unused-vars
+export async function getUserDetails(id) {
+    const docRef = doc(db, 'userDetails', id)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+        return docSnap.data()
+    }
+    return null
 }
 
 export async function getUserDetailsFromUsername(username) {
@@ -57,71 +65,50 @@ export async function getUserDetailsFromUsername(username) {
     return null
 }
 
-export async function createOrUpdateUserDetails(email, details) {
-    try {
-        const docRef = doc(db, 'userDetails', email)
-        const docSnap = await getDoc(docRef)
-        if (!docSnap.exists()) {
-            const newDetails = details
-            const today = new Date()
-            const day = String(today.getDate())
-            const month = today.toLocaleString('default', { month: 'long' })
-            const year = today.getFullYear()
-            // eslint-disable-next-line no-param-reassign
-            newDetails.createdAt = {
-                day,
-                month,
-                year,
-            }
-            newDetails.following = []
-            newDetails.followers = []
-            newDetails.email = email
-            newDetails.likedTweets = []
-            newDetails.tweets = []
-            await setDoc(docRef, newDetails)
-        } else updateDoc(docRef, details)
-    } catch (err) {
-        console.log(err)
+export async function updateUserDetails(id, details) {
+    const userDetails = await getUserDetails(id)
+    if (userDetails) {
+        await updateDoc(doc(db, 'userDetails', id), details)
+        return details
     }
+    return null
 }
 
-export async function usernameAlreadyExists(username, id) {
-    const userDetailsRef = collection(db, 'userDetails')
+export async function deleteUserDetails(id) {
+    console.log(`NOT IMPLEMENTED: deleteUserDetails. Id: ${id}`)
+}
+
+export async function usernameExists(username, userID) {
     const q = await query(
-        userDetailsRef,
+        collection(db, 'userDetails'),
         where('username', '==', username),
-        where('userID', '!=', id),
+        where('userID', '!=', userID),
     )
     const queryResult = await getDocs(q)
-    const qArr = []
-    queryResult.forEach((d) => {
-        qArr.push(d.data())
-    })
-    return qArr.length > 0
+
+    return queryResult.length > 0
 }
 
 export async function follow(userID, followID) {
-    const userDetails = await getUserDetailsFromID(userID)
-    const followDetails = await getUserDetailsFromID(followID)
+    const userDetails = await getUserDetails(userID)
+    const followDetails = await getUserDetails(followID)
+
     userDetails.following.push(followID)
     followDetails.followers.push(userID)
-    await createOrUpdateUserDetails(userDetails.email, userDetails)
-    await createOrUpdateUserDetails(followDetails.email, followDetails)
+
+    await updateUserDetails(userID, userDetails)
+    await updateUserDetails(followID, followDetails)
 }
 
 export async function unfollow(userID, followID) {
-    const userDetails = await getUserDetailsFromID(userID)
-    const followDetails = await getUserDetailsFromID(followID)
+    const userDetails = await getUserDetails(userID)
+    const followDetails = await getUserDetails(followID)
+
     const index1 = userDetails.following.indexOf(followID)
     userDetails.following.splice(index1, 1)
     const index2 = followDetails.followers.indexOf(userID)
     followDetails.followers.splice(index2, 1)
-    await createOrUpdateUserDetails(userDetails.email, userDetails)
-    await createOrUpdateUserDetails(followDetails.email, followDetails)
-}
 
-export async function isFollowing(userID, followID) {
-    const userDetails = await getUserDetailsFromID(userID)
-    const index = userDetails.following.indexOf(followID)
-    return index > -1
+    await updateUserDetails(userID, userDetails)
+    await updateUserDetails(followID, followDetails)
 }
