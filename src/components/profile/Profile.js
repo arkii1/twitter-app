@@ -9,11 +9,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { getTweetsFromUsersArr } from '../../utility/firestore/tweetFirestore'
+import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
 import {
     follow,
     getUserDetailsFromUsername,
-    isFollowing,
     unfollow,
 } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
@@ -43,21 +42,18 @@ function Profile() {
             if (!isUsersPage) {
                 const newDetails = await getUserDetailsFromUsername(id)
                 setDetails(newDetails)
-                const data = await getTweetsFromUsersArr(
-                    [newDetails.userID],
+                const data = await getTweetsFromUserArray(
+                    [newDetails.id],
                     0,
                     tweetLength,
                 )
                 setTweetData(data)
-                const fol = await isFollowing(
-                    userDetails.userID,
-                    newDetails.userID,
-                )
+                const fol = userDetails.following.indexOf(newDetails.id) !== -1
                 setFollowing(fol)
             } else {
                 setDetails(userDetails)
-                const data = await getTweetsFromUsersArr(
-                    [userDetails.userID],
+                const data = await getTweetsFromUserArray(
+                    [userDetails.id],
                     0,
                     tweetLength,
                 )
@@ -70,14 +66,12 @@ function Profile() {
     }, [configureProfile, id, userDetails, isUsersPage, tweetLength])
 
     const handleFollow = async () => {
-        const { userID: folID } = await getUserDetailsFromUsername(id)
-        await follow(userDetails.userID, folID)
+        await follow(userDetails.id, details.id)
         setFollowing(true)
     }
 
     const handleUnfollow = async () => {
-        const { userID: folID } = await getUserDetailsFromUsername(id)
-        unfollow(userDetails.userID, folID)
+        unfollow(userDetails.id, details.id)
         setFollowing(false)
     }
 
