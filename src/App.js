@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
-import TweetList from './components/common/TweetList'
 import Home from './components/home/Home'
 import AppLayout from './components/layout/AppLayout'
 import Modal from './components/layout/Modal'
@@ -31,12 +30,7 @@ function App() {
                         <Routes>
                             <Route path="app" element={<AppLayout />}>
                                 <Route index path="home" element={<Home />} />
-                                <Route path=":id" element={<Profile />}>
-                                    <Route
-                                        path="tweets/:tweetList"
-                                        element={<TweetList />}
-                                    />
-                                </Route>
+                                <Route path=":id" element={<Profile />} />
                                 <Route
                                     path=":id/community/:userList"
                                     element={<UserList />}
