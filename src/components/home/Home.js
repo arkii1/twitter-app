@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useAuth } from '../../contexts/AuthContext'
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { getTweetsFromUsersArr } from '../../utility/firestore/tweetFirestore'
+import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
 import TweetList from '../common/TweetList'
 import ConfigureProfile from '../profile/ConfigureProfile'
 import CreateTweet from './CreateTweet'
@@ -19,15 +19,14 @@ function Home() {
     const [tweetsLength, setTweetsLength] = useState(10)
 
     useEffect(() => {
-        const handleTweets = async () => {
+        ;(async () => {
             if (!configureProfile) {
-                const arr = [...userDetails.following, userDetails.userID]
-                const t = await getTweetsFromUsersArr(arr, 0, tweetsLength)
+                const arr = [...userDetails.following, userDetails.id]
+                const t = await getTweetsFromUserArray(arr, 0, tweetsLength)
                 setTweets(t)
             }
-        }
-        handleTweets()
-    }, [])
+        })()
+    }, [configureProfile, tweetsLength, userDetails])
 
     return (
         <>
