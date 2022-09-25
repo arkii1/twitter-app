@@ -9,7 +9,7 @@ import defaultAvatarSrc from '../../assets/profile-pic.png'
 import { useAuth } from '../../contexts/AuthContext'
 import { useDetails } from '../../contexts/UserDetailsContext'
 import { getDays, getMonths, getYears } from '../../utility/OptionSelectArrays'
-import { usernameAlreadyExists } from '../../utility/firestore/userDetailsFirestore'
+import { usernameExists } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageInput from '../input/ImageInput'
 import LabelAndInput from '../input/LabelAndInput'
@@ -19,7 +19,7 @@ import './styles.css'
 
 function ConfigureProfile({ exit }) {
     const { currentUser } = useAuth()
-    const { userDetails, updateUserDetails } = useDetails()
+    const { userDetails, updateUserDetailsContext } = useDetails()
 
     const nameRef = useRef()
     const usernameRef = useRef()
@@ -30,10 +30,10 @@ function ConfigureProfile({ exit }) {
     const dayRef = useRef()
     const yearRef = useRef()
     const avatarRef = useRef()
-    const [error, setError] = useState('')
     const bgRef = useRef()
-
     const errorRef = useRef()
+
+    const [error, setError] = useState('')
 
     const handleExit = () => {
         if (nameRef.current.value.length <= 0) {
@@ -71,12 +71,7 @@ function ConfigureProfile({ exit }) {
             return setError('Please fill in birth date.')
         }
 
-        if (
-            await usernameAlreadyExists(
-                usernameRef.current.value,
-                currentUser.uid,
-            )
-        ) {
+        if (await usernameExists(usernameRef.current.value, currentUser.uid)) {
             return setError('Username already exists.')
         }
 
@@ -93,14 +88,10 @@ function ConfigureProfile({ exit }) {
             name: nameRef.current.value,
             username: usernameRef.current.value,
             website: websiteRef.current.value || '',
-            userID: currentUser.uid,
+            id: currentUser.uid,
         }
-        try {
-            updateUserDetails(details)
-        } catch (err) {
-            console.log(err)
-            return setError('Creating or updating user details failed')
-        }
+
+        updateUserDetailsContext(details)
 
         exit()
         return setError('')
