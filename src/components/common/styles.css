@@ -161,7 +161,7 @@
 }
 
 .tweet-card__comment,
-.tweet-card__retweet,
+.tweet-card__retweet--not-retweeted,
 .tweet-card__like--unliked,
 .tweet-card__share,
 .tweet-card__ellipsis {
@@ -172,6 +172,26 @@
     color: rgb(var(--red));
 }
 
+.tweet-card__like--unliked:hover {
+    color: rgb(var(--red));
+}
+
+.tweet-card__like--liked:hover > button,
+.tweet-card__like--unliked:hover > button {
+    background-color: rgba(var(--red), 0.1);
+}
+
+.tweet-card__retweet--retweeted {
+    color: rgb(var(--green));
+}
+
+.tweet-card__retweet--not-retweeted:hover {
+    color: rgb(var(--green));
+}
+.tweet-card__retweet--retweeted:hover > button
+.tweet-card__retweet--not-retweeted:hover > button {
+    background-color: rgba(var(--green), 0.1);
+}
 
 .tweet-card__comment:hover,
 .tweet-card__share:hover,
@@ -183,22 +203,4 @@
 .tweet-card__share:hover > button,
 .tweet-card__ellipsis:hover > button {
     background-color: rgba(var(--blue), 0.1);
-}
-
-.tweet-card__retweet:hover {
-    color: rgb(var(--green));
-}
-
-.tweet-card__retweet:hover > button {
-    background-color: rgba(var(--green), 0.1);
-}
-
-
-.tweet-card__like--unliked:hover {
-    color: rgb(var(--red));
-}
-
-.tweet-card__like--liked:hover > button,
-.tweet-card__like--unliked:hover > button {
-    background-color: rgba(var(--red), 0.1);
 }
