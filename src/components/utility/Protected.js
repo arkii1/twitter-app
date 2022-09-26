@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext'
 
 function Protected({ children }) {
     const { currentUser } = useAuth()
+
     if (!currentUser) {
         return <Navigate to="/modal/sign-in" />
     }

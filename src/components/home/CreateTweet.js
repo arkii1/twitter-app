@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { createTweet } from '../../utility/firestoreUtils'
+import { createTweet } from '../../utility/firestore/tweetFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import CircleProgressBar from '../input/CircleProgressBar'
@@ -12,6 +12,7 @@ import './styles.css'
 
 function CreateTweet() {
     const { userDetails } = useDetails()
+
     const textInputRef = useRef()
     const fileInputRef = useRef()
 
@@ -34,7 +35,7 @@ function CreateTweet() {
 
     const handleCreateTweet = () => {
         const text = textInputRef.current.value
-        createTweet(userDetails.userID, null, [], text, src)
+        createTweet(userDetails.id, null, text, src)
     }
 
     const handleChange = () => {

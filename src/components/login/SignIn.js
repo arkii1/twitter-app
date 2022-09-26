@@ -10,6 +10,7 @@ import './styles.css'
 
 function SignIn() {
     const { googleSignIn, signInWithEmail, currentUser } = useAuth()
+
     const emailRef = useRef()
     const passwordRef = useRef()
 

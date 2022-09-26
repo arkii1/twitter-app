@@ -9,13 +9,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
+import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
 import {
     follow,
-    getTweetsFromUsersArr,
     getUserDetailsFromUsername,
-    isFollowing,
     unfollow,
-} from '../../utility/firestoreUtils'
+} from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import LinkTabs from '../common/LinkTabs'
@@ -26,12 +25,14 @@ import './styles.css'
 
 function Profile() {
     const { userDetails } = useDetails()
+    const { id } = useParams()
+
+    const isUsersPage = id === userDetails.username
+
     const [configureProfile, setConfigureProfile] = useState(!userDetails)
     const [details, setDetails] = useState(userDetails)
     const [loading, setLoading] = useState(true)
     const [following, setFollowing] = useState(false)
-    const { id } = useParams()
-    const isUsersPage = id === userDetails.username
     const [tweetData, setTweetData] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [tweetLength, setTweetLength] = useState(10)
@@ -41,21 +42,18 @@ function Profile() {
             if (!isUsersPage) {
                 const newDetails = await getUserDetailsFromUsername(id)
                 setDetails(newDetails)
-                const data = await getTweetsFromUsersArr(
-                    [newDetails.userID],
+                const data = await getTweetsFromUserArray(
+                    [newDetails.id],
                     0,
                     tweetLength,
                 )
                 setTweetData(data)
-                const fol = await isFollowing(
-                    userDetails.userID,
-                    newDetails.userID,
-                )
+                const fol = userDetails.following.indexOf(newDetails.id) !== -1
                 setFollowing(fol)
             } else {
                 setDetails(userDetails)
-                const data = await getTweetsFromUsersArr(
-                    [userDetails.userID],
+                const data = await getTweetsFromUserArray(
+                    [userDetails.id],
                     0,
                     tweetLength,
                 )
@@ -68,14 +66,12 @@ function Profile() {
     }, [configureProfile, id, userDetails, isUsersPage, tweetLength])
 
     const handleFollow = async () => {
-        const { userID: folID } = await getUserDetailsFromUsername(id)
-        await follow(userDetails.userID, folID)
+        await follow(userDetails.id, details.id)
         setFollowing(true)
     }
 
     const handleUnfollow = async () => {
-        const { userID: folID } = await getUserDetailsFromUsername(id)
-        unfollow(userDetails.userID, folID)
+        unfollow(userDetails.id, details.id)
         setFollowing(false)
     }
 

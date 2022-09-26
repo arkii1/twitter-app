@@ -8,10 +8,12 @@ import LabelAndInput from '../input/LabelAndInput'
 import './styles.css'
 
 function SignUp() {
+    const { signup, currentUser } = useAuth()
+
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup, currentUser } = useAuth()
+
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 

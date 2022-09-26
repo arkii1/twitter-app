@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 import uniqid from 'uniqid'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { follow, isFollowing, unfollow } from '../../utility/firestoreUtils'
+import { follow, unfollow } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import ProfileModal from './ProfileModal'
@@ -14,20 +14,22 @@ import './styles.css'
 // Note details is a promise
 function UserCard({ details }) {
     const { userDetails } = useDetails()
+
+    const imageRef = useRef()
+    const nameRef = useRef()
+
     const [profileDetails, setProfileDetails] = useState(null)
     const [following, setFollowing] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
-    const imageRef = useRef()
-    const nameRef = useRef()
 
     const handleFollow = async () => {
-        await follow(userDetails.userID, profileDetails.userID)
+        await follow(userDetails.id, profileDetails.id)
         setFollowing(true)
     }
 
     const handleUnfollow = async () => {
-        await unfollow(userDetails.userID, profileDetails.userID)
+        await unfollow(userDetails.id, profileDetails.id)
         setFollowing(false)
     }
 
@@ -45,10 +47,8 @@ function UserCard({ details }) {
         const init = async () => {
             const newDetails = await details
             setProfileDetails(newDetails)
-            const newFollowing = await isFollowing(
-                userDetails.userID,
-                newDetails.userID,
-            )
+            const newFollowing =
+                userDetails.following.indexOf(newDetails.id) !== -1
             setFollowing(newFollowing)
         }
         init()
@@ -56,7 +56,7 @@ function UserCard({ details }) {
 
     return (
         profileDetails &&
-        profileDetails.userID !== userDetails.userID &&
+        profileDetails.id !== userDetails.id &&
         following !== null && (
             <>
                 {profileModal && (

@@ -7,8 +7,9 @@ import propTypes from 'prop-types'
 import './styles.css'
 
 function ImageInput({ startSrc, alt, inputRef, type }) {
-    const [src, setSrc] = useState(startSrc)
     const fileRef = useRef()
+
+    const [src, setSrc] = useState(startSrc)
 
     const onChange = () => {
         const newSrc = URL.createObjectURL(fileRef.current.files[0])

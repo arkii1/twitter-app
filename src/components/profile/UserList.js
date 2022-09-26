@@ -1,28 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import {
-    getUserDetailsFromIDArray,
-    getUserDetailsFromUsername,
-} from '../../utility/firestoreUtils'
+import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
+import { getUserDetailsFromUsername } from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
 import UserCard from './UserCard'
 import './styles.css'
 
 function UserList() {
     const { id: username, userList } = useParams()
-    const [loading, setLoading] = useState(true)
 
+    const linkTabsData = [
+        {
+            link: `/app/${username}/community/following`,
+            text: 'Following',
+        },
+        {
+            link: `/app/${username}/community/followers`,
+            text: 'Followers',
+        },
+    ]
+
+    const [loading, setLoading] = useState(true)
     const [followingJSX, setFollowingJSX] = useState()
     const [followersJSX, setFollowersJSX] = useState()
 
     useEffect(() => {
         const init = async () => {
             const details = await getUserDetailsFromUsername(username)
-            const followingData = await getUserDetailsFromIDArray(
+            const followingData = await getTweetsFromUserArray(
                 details.following,
             )
-            const followersData = await getUserDetailsFromIDArray(
+            const followersData = await getTweetsFromUserArray(
                 details.followers,
             )
             const newFollowingJSX = followingData.map((f) => (
@@ -36,19 +45,7 @@ function UserList() {
             setLoading(false)
         }
         init()
-        console.log('Init')
     }, [username])
-
-    const linkTabsData = [
-        {
-            link: `/app/${username}/following`,
-            text: 'Following',
-        },
-        {
-            link: `/app/${username}/followers`,
-            text: 'Followers',
-        },
-    ]
 
     if (userList === 'following' || userList === 'followers') {
         return (

@@ -14,9 +14,16 @@ function OptionSelect({
     startValue = '',
 }) {
     const [active, toggleActive] = useToggle()
+
     const [divClass, setDivClass] = useState('option-select--inactive')
     const [labelClass, setLabelClass] = useState('option-select--inactive')
     const [inputValue, setInputValue] = useState(startValue)
+
+    const optionsJSX = options.map((option) => (
+        <option value={option} key={uniqid()}>
+            {option}
+        </option>
+    ))
 
     useEffect(() => {
         const newDivClass = active
@@ -28,12 +35,6 @@ function OptionSelect({
         setDivClass(newDivClass)
         setLabelClass(newLabelClass)
     }, [active])
-
-    const optionsJSX = options.map((option) => (
-        <option value={option} key={uniqid()}>
-            {option}
-        </option>
-    ))
 
     return (
         <div

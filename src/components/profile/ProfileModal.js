@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { follow, isFollowing, unfollow } from '../../utility/firestoreUtils'
+import { follow, unfollow } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
 import ImageContainer from '../common/ImageContainer'
 import FollowingFollowersLinks from './FollowingFollowersLinks'
@@ -12,27 +12,28 @@ import './styles.css'
 
 function ProfileModal({ details, pos }) {
     const { userDetails } = useDetails()
-    const [following, setFollowing] = useState(null)
+
     const style = {
         position: 'absolute',
         left: `calc(${pos[0]}px)`,
         top: `calc(${pos[1]}px + 3rem)`,
     }
 
+    const [following, setFollowing] = useState(null)
+
     const handleFollow = async () => {
-        await follow(userDetails.userID, details.userID)
+        await follow(userDetails.id, details.id)
         setFollowing(true)
     }
 
     const handleUnfollow = async () => {
-        await unfollow(userDetails.userID)
+        await unfollow(userDetails.id, details.id)
     }
 
-    const init = async () => {
-        const newFol = await isFollowing(userDetails.userID, details.userID)
+    ;(async () => {
+        const newFol = userDetails.following.indexOf(details.id) !== -1
         setFollowing(newFol)
-    }
-    init()
+    })()
 
     return (
         following !== null && (
