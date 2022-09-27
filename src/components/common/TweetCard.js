@@ -11,12 +11,8 @@ import {
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import {
-    likeTweet,
-    likesTweet,
-    unlikeTweet,
-} from '../../utility/firestore/tweetFirestore'
-import { getUserDetailsFromID } from '../../utility/firestore/userDetailsFirestore'
+import { likeTweet, unlikeTweet } from '../../utility/firestore/tweetFirestore'
+import { getUserDetails } from '../../utility/firestore/userDetailsFirestore'
 import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
 import ImageContainer from './ImageContainer'
@@ -63,7 +59,7 @@ function TweetCard({ tweet }) {
 
     useEffect(() => {
         const init = async () => {
-            const details = await getUserDetailsFromID(tweet.userID)
+            const details = await getUserDetails(tweet.userID)
             setTweetUserDetails(details)
 
             if (imageRef.current) {
@@ -72,7 +68,7 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = await likesTweet(userDetails.userID, tweet.id)
+                const like = userDetails.liked.indexOf(tweet.id) !== -1
                 setLiked(like)
             }
         }
