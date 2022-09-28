@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import './App.css'
 import Home from './components/home/Home'
@@ -20,6 +20,10 @@ function App() {
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>
+                        <Route
+                            index
+                            element={<Navigate to="/modal/sign-in" />}
+                        />
                         <Route path="modal" element={<Modal />}>
                             <Route index path="sign-in" element={<SignIn />} />
                             <Route path="sign-up" element={<SignUp />} />
