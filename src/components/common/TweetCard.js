@@ -43,14 +43,14 @@ function TweetCard({ tweet }) {
     const handleLikeTweet = async () => {
         const like = !liked
         if (like) {
-            await likeTweet(userDetails.userID, tweet.id)
+            await likeTweet(userDetails.id, tweetDetails.id)
             const newTweetDetails = tweetDetails
-            newTweetDetails.likes.push(userDetails.userID)
+            newTweetDetails.likes.push(userDetails.id)
             setTweetDetails(newTweetDetails)
         } else {
-            await unlikeTweet(userDetails.userID, tweet.id)
+            await unlikeTweet(userDetails.id, tweetDetails.id)
             const newTweetDetails = tweetDetails
-            const index = newTweetDetails.likes.indexOf(userDetails.userID)
+            const index = newTweetDetails.likes.indexOf(userDetails.id)
             newTweetDetails.likes.splice(index, 1)
             setTweetDetails(newTweetDetails)
         }
@@ -59,7 +59,7 @@ function TweetCard({ tweet }) {
 
     useEffect(() => {
         const init = async () => {
-            const details = await getUserDetails(tweet.userID)
+            const details = await getUserDetails(tweetDetails.userID)
             setTweetUserDetails(details)
 
             if (imageRef.current) {
@@ -68,12 +68,12 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = userDetails.liked.indexOf(tweet.id) !== -1
+                const like = userDetails.liked.indexOf(tweetDetails.id) !== -1
                 setLiked(like)
             }
         }
         init()
-    }, [liked, tweet, userDetails])
+    }, [liked, tweetDetails, userDetails])
 
     return (
         tweetUserDetails !== null && (
@@ -145,7 +145,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.repliesArr.length}
+                                    {tweetDetails.repliesArr.length}
                                 </span>
                             </span>
                             <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">
@@ -162,7 +162,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.retweets.length}{' '}
+                                    {tweetDetails.retweets.length}{' '}
                                 </span>
                             </span>
                             <span
@@ -184,7 +184,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.likes.length}
+                                    {tweetDetails.likes.length}
                                 </span>
                             </span>
                             <span className="tweet-card__share">
