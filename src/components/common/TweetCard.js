@@ -68,7 +68,8 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = tweetDetails.likes.indexOf(tweetDetails.userID)
+                const like =
+                    tweetDetails.likes.indexOf(tweetDetails.userID) !== -1
                 setLiked(like)
             }
         }
