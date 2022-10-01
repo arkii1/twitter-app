@@ -19,7 +19,9 @@ function ProfileModal({ details, pos }) {
         top: `calc(${pos[1]}px + 3rem)`,
     }
 
-    const [following, setFollowing] = useState(null)
+    const [following, setFollowing] = useState(
+        userDetails.following.indexOf(details.id) !== -1,
+    )
 
     const handleFollow = async () => {
         await follow(userDetails.id, details.id)
@@ -29,11 +31,6 @@ function ProfileModal({ details, pos }) {
     const handleUnfollow = async () => {
         await unfollow(userDetails.id, details.id)
     }
-
-    ;(async () => {
-        const newFol = userDetails.following.indexOf(details.id) !== -1
-        setFollowing(newFol)
-    })()
 
     return (
         following !== null && (
