@@ -24,7 +24,7 @@ function TweetCard({ tweet }) {
     const nameRef = useRef()
     const imageRef = useRef()
 
-    const [tweetDetails, setTweetDetails] = useState(tweet)
+    const [tweetDetails, setTweetDetails] = useState(tweet.tweetData)
     const [tweetUserDetails, setTweetUserDetails] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
@@ -43,12 +43,12 @@ function TweetCard({ tweet }) {
     const handleLikeTweet = async () => {
         const like = !liked
         if (like) {
-            await likeTweet(userDetails.id, tweet.id)
+            await likeTweet(userDetails.id, tweetDetails.id)
             const newTweetDetails = tweetDetails
             newTweetDetails.likes.push(userDetails.id)
             setTweetDetails(newTweetDetails)
         } else {
-            await unlikeTweet(userDetails.id, tweet.id)
+            await unlikeTweet(userDetails.id, tweetDetails.id)
             const newTweetDetails = tweetDetails
             const index = newTweetDetails.likes.indexOf(userDetails.id)
             newTweetDetails.likes.splice(index, 1)
@@ -59,7 +59,7 @@ function TweetCard({ tweet }) {
 
     useEffect(() => {
         const init = async () => {
-            const details = await getUserDetails(tweet.userID)
+            const details = await getUserDetails(tweetDetails.userID)
             setTweetUserDetails(details)
 
             if (imageRef.current) {
@@ -68,7 +68,7 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = tweetDetails.likes.indexOf(userDetails.id)
+                const like = tweetDetails.likes.indexOf(tweetDetails.userID)
                 setLiked(like)
             }
         }
@@ -129,7 +129,7 @@ function TweetCard({ tweet }) {
                                 />
                             </span>
                         </div>
-                        <span className="text mb-1">{tweet.text}</span>
+                        <span className="text mb-1">{tweetDetails.text}</span>
                         <div className="d-flex justify-content-between w-75">
                             <span className="tweet-card__comment d-flex justify-content-start align-items-center gap-1">
                                 <Button
@@ -145,7 +145,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweetDetails.repliesArr.length}
+                                    {tweetDetails.replies.length}
                                 </span>
                             </span>
                             <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">
