@@ -56,7 +56,6 @@ export function UserDetailsProvider({ children }) {
                 console.log(details)
                 setUserDetails(details)
             }
-            setLoading(false)
         }
         init()
     }, [currentUser])
