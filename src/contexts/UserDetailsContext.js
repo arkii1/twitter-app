@@ -23,8 +23,8 @@ export function useDetails() {
 
 export function UserDetailsProvider({ children }) {
     const { currentUser } = useAuth()
-
     const [userDetails, setUserDetails] = useState()
+
     const updateUserDetailsContext = useCallback(
         async (details) => {
             if (userDetails) {
@@ -48,6 +48,18 @@ export function UserDetailsProvider({ children }) {
         () => ({ userDetails, updateUserDetailsContext }),
         [userDetails, updateUserDetailsContext],
     )
+
+    useEffect(() => {
+        const init = async () => {
+            if (currentUser) {
+                const details = await getUserDetails(currentUser.uid)
+                console.log(details)
+                setUserDetails(details)
+            }
+            setLoading(false)
+        }
+        init()
+    }, [currentUser])
 
     return (
         currentUser &&

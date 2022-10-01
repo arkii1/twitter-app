@@ -12,21 +12,22 @@ import './styles.css'
 function Home() {
     const { logout } = useAuth()
     const { userDetails } = useDetails()
-
-    const [configureProfile, setConfigureProfile] = useState(!userDetails)
+    const [configureProfile, setConfigureProfile] = useState(false)
     const [tweets, setTweets] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [tweetsLength, setTweetsLength] = useState(10)
 
     useEffect(() => {
+        const config = !userDetails
+        setConfigureProfile(config)
         ;(async () => {
-            if (!configureProfile) {
+            if (!config) {
                 const arr = [...userDetails.following, userDetails.id]
                 const t = await getTweetsFromUserArray(arr, 0, tweetsLength)
                 setTweets(t)
             }
         })()
-    }, [configureProfile, tweetsLength, userDetails])
+    }, [userDetails, tweetsLength, configureProfile])
 
     return (
         <>

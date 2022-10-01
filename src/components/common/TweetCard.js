@@ -145,7 +145,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.repliesArr.length}
+                                    {tweetDetails.repliesArr.length}
                                 </span>
                             </span>
                             <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">
@@ -162,7 +162,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.retweets.length}{' '}
+                                    {tweetDetails.retweets.length}{' '}
                                 </span>
                             </span>
                             <span
@@ -184,7 +184,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweet.likes.length}
+                                    {tweetDetails.likes.length}
                                 </span>
                             </span>
                             <span className="tweet-card__share">
