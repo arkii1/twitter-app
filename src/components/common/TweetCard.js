@@ -24,7 +24,7 @@ function TweetCard({ tweet }) {
     const nameRef = useRef()
     const imageRef = useRef()
 
-    const [tweetDetails, setTweetDetails] = useState(tweet)
+    const [tweetDetails, setTweetDetails] = useState(tweet.tweetData)
     const [tweetUserDetails, setTweetUserDetails] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
@@ -68,12 +68,12 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = userDetails.liked.indexOf(tweetDetails.id) !== -1
+                const like = tweetDetails.likes.indexOf(tweetDetails.userID)
                 setLiked(like)
             }
         }
         init()
-    }, [liked, tweetDetails, userDetails])
+    }, [liked, tweet, userDetails, tweetDetails])
 
     return (
         tweetUserDetails !== null && (
@@ -129,7 +129,7 @@ function TweetCard({ tweet }) {
                                 />
                             </span>
                         </div>
-                        <span className="text mb-1">{tweet.text}</span>
+                        <span className="text mb-1">{tweetDetails.text}</span>
                         <div className="d-flex justify-content-between w-75">
                             <span className="tweet-card__comment d-flex justify-content-start align-items-center gap-1">
                                 <Button
@@ -145,7 +145,7 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweetDetails.repliesArr.length}
+                                    {tweetDetails.replies.length}
                                 </span>
                             </span>
                             <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">

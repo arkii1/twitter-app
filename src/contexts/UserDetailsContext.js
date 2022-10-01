@@ -23,7 +23,6 @@ export function useDetails() {
 
 export function UserDetailsProvider({ children }) {
     const { currentUser } = useAuth()
-    const [loading, setLoading] = useState(true)
     const [userDetails, setUserDetails] = useState()
 
     const updateUserDetailsContext = useCallback(
@@ -37,6 +36,14 @@ export function UserDetailsProvider({ children }) {
         [currentUser, userDetails],
     )
 
+    useEffect(() => {
+        const initDetails = async () => {
+            const details = await getUserDetails(currentUser.uid)
+            setUserDetails(details)
+        }
+        if (currentUser) initDetails()
+    }, [currentUser])
+
     const value = useMemo(
         () => ({ userDetails, updateUserDetailsContext }),
         [userDetails, updateUserDetailsContext],
@@ -49,15 +56,17 @@ export function UserDetailsProvider({ children }) {
                 console.log(details)
                 setUserDetails(details)
             }
-            setLoading(false)
         }
         init()
     }, [currentUser])
 
     return (
-        <UserDetailsContext.Provider value={value}>
-            {!loading && children}
-        </UserDetailsContext.Provider>
+        currentUser &&
+        userDetails && (
+            <UserDetailsContext.Provider value={value}>
+                {children}
+            </UserDetailsContext.Provider>
+        )
     )
 }
 
