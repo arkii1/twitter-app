@@ -11,12 +11,8 @@ import {
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import {
-    likeTweet,
-    likesTweet,
-    unlikeTweet,
-} from '../../utility/firestore/tweetFirestore'
-import { getUserDetailsFromID } from '../../utility/firestore/userDetailsFirestore'
+import { likeTweet, unlikeTweet } from '../../utility/firestore/tweetFirestore'
+import { getUserDetails } from '../../utility/firestore/userDetailsFirestore'
 import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
 import ImageContainer from './ImageContainer'
@@ -47,14 +43,14 @@ function TweetCard({ tweet }) {
     const handleLikeTweet = async () => {
         const like = !liked
         if (like) {
-            await likeTweet(userDetails.userID, tweet.id)
+            await likeTweet(userDetails.id, tweet.id)
             const newTweetDetails = tweetDetails
-            newTweetDetails.likes.push(userDetails.userID)
+            newTweetDetails.likes.push(userDetails.id)
             setTweetDetails(newTweetDetails)
         } else {
-            await unlikeTweet(userDetails.userID, tweet.id)
+            await unlikeTweet(userDetails.id, tweet.id)
             const newTweetDetails = tweetDetails
-            const index = newTweetDetails.likes.indexOf(userDetails.userID)
+            const index = newTweetDetails.likes.indexOf(userDetails.id)
             newTweetDetails.likes.splice(index, 1)
             setTweetDetails(newTweetDetails)
         }
@@ -63,7 +59,7 @@ function TweetCard({ tweet }) {
 
     useEffect(() => {
         const init = async () => {
-            const details = await getUserDetailsFromID(tweet.userID)
+            const details = await getUserDetails(tweet.userID)
             setTweetUserDetails(details)
 
             if (imageRef.current) {
@@ -72,12 +68,12 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = await likesTweet(userDetails.userID, tweet.id)
+                const like = tweetDetails.likes.indexOf(userDetails.id)
                 setLiked(like)
             }
         }
         init()
-    }, [liked, tweet, userDetails])
+    }, [liked, tweet, userDetails, tweetDetails])
 
     return (
         tweetUserDetails !== null && (
