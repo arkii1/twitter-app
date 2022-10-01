@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react'
 
 import propTypes from 'prop-types'
 
@@ -30,15 +36,26 @@ export function UserDetailsProvider({ children }) {
         [currentUser, userDetails],
     )
 
+    useEffect(() => {
+        const initDetails = async () => {
+            const details = await getUserDetails(currentUser.uid)
+            setUserDetails(details)
+        }
+        if (currentUser) initDetails()
+    }, [currentUser])
+
     const value = useMemo(
         () => ({ userDetails, updateUserDetailsContext }),
         [userDetails, updateUserDetailsContext],
     )
 
     return (
-        <UserDetailsContext.Provider value={value}>
-            {children}
-        </UserDetailsContext.Provider>
+        currentUser &&
+        userDetails && (
+            <UserDetailsContext.Provider value={value}>
+                {children}
+            </UserDetailsContext.Provider>
+        )
     )
 }
 
