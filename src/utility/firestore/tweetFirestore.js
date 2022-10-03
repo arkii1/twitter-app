@@ -146,7 +146,7 @@ export async function unlikeTweet(userID, tweetID) {
 export async function retweet(userID, tweetID) {
     const userDetails = await getUserDetails(userID)
     userDetails.tweets.push({
-        id: tweetID,
+        tweetID,
         retweetedUser: userID,
     })
     await updateUserDetails(userDetails.id, userDetails)

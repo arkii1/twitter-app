@@ -61,8 +61,7 @@ export function UserDetailsProvider({ children }) {
     }, [currentUser])
 
     return (
-        currentUser &&
-        userDetails && (
+        currentUser && (
             <UserDetailsContext.Provider value={value}>
                 {children}
             </UserDetailsContext.Provider>

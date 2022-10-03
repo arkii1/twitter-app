@@ -11,7 +11,12 @@ import {
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { likeTweet, unlikeTweet } from '../../utility/firestore/tweetFirestore'
+import {
+    likeTweet,
+    retweet,
+    unRetweet,
+    unlikeTweet,
+} from '../../utility/firestore/tweetFirestore'
 import { getUserDetails } from '../../utility/firestore/userDetailsFirestore'
 import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
@@ -29,6 +34,7 @@ function TweetCard({ tweet }) {
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
     const [liked, setLiked] = useState(null)
+    const [retweeted, setRetweeted] = useState(tweet.retweetedUser)
 
     const handleModalOn = (ref) => {
         setProfileModal(true)
@@ -57,6 +63,17 @@ function TweetCard({ tweet }) {
         setLiked(like)
     }
 
+    const handleRetweet = async () => {
+        const r = !retweeted
+        if (r) {
+            await retweet(userDetails.id, tweetDetails.id)
+            setRetweeted(true)
+        } else {
+            await unRetweet(userDetails.id, tweetDetails.id)
+            setRetweeted(false)
+        }
+    }
+
     useEffect(() => {
         const init = async () => {
             const details = await getUserDetails(tweetDetails.userID)
@@ -68,7 +85,8 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = tweetDetails.likes.indexOf(tweetDetails.userID)
+                const like =
+                    tweetDetails.likes.indexOf(tweetDetails.userID) !== -1
                 setLiked(like)
             }
         }
@@ -154,6 +172,7 @@ function TweetCard({ tweet }) {
                                     size="1.1rem"
                                     padding="2"
                                     colours="inherit"
+                                    onClick={handleRetweet}
                                 />
                                 <span
                                     style={{

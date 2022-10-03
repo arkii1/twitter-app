@@ -59,7 +59,12 @@ function ProfileModal({ details, pos }) {
                     <FollowingFollowersLinks details={details} />
                 </span>
 
-                <span style={{ width: '6rem' }}>
+                <span
+                    style={{
+                        width: '6rem',
+                    }}
+                    className="d-flex justify-content-end"
+                >
                     <Button
                         text={following ? 'Unfollow' : 'Follow'}
                         colours={following ? 'light' : 'dark'}
