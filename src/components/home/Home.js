@@ -28,7 +28,7 @@ function Home() {
             const t = await getTweetsFromUserArray(arr, 0, tweetsLength)
             if (t !== tweets) setTweets(t)
         }
-        updateTweets()
+        if (userDetails) updateTweets()
     }, [tweetsLength, userDetails])
 
     return (
