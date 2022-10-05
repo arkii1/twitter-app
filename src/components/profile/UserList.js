@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { getTweetsFromUserArray } from '../../utility/firestore/tweetFirestore'
-import { getUserDetailsFromUsername } from '../../utility/firestore/userDetailsFirestore'
+import {
+    getUserDetails,
+    getUserDetailsFromUsername,
+} from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
 import UserCard from './UserCard'
 import './styles.css'
@@ -21,35 +23,51 @@ function UserList() {
         },
     ]
 
-    const [loading, setLoading] = useState(true)
-    const [followingJSX, setFollowingJSX] = useState()
-    const [followersJSX, setFollowersJSX] = useState()
+    const [jsx, setJsx] = useState()
+    const [profileDetails, setProfileDetails] = useState()
 
-    ;(async () => {
-        const details = await getUserDetailsFromUsername(username)
-        console.log(details)
-        const followingData = await getTweetsFromUserArray(details.following)
-        const followersData = await getTweetsFromUserArray(details.followers)
-        const newFollowingJSX = followingData.map((f) => (
-            <UserCard details={f} />
-        ))
-        const newFollowersJSX = followersData.map((f) => (
-            <UserCard details={f} />
-        ))
-        setFollowingJSX(newFollowingJSX)
-        setFollowersJSX(newFollowersJSX)
-        setLoading(false)
-    })()
+    useEffect(() => {
+        ;(async () => {
+            const details = await getUserDetailsFromUsername(username)
+            setProfileDetails(details)
+        })()
+    }, [username])
+
+    useEffect(() => {
+        if (!profileDetails) return
+        ;(async () => {
+            if (userList === 'following' || userList === 'followers') {
+                if (userList === 'following') {
+                    console.log(profileDetails)
+                    const data = await Promise.all(
+                        profileDetails.following.map((f) => getUserDetails(f)),
+                    )
+                    const newJsx = data.map((f) => (
+                        <span key={f.id}>
+                            <UserCard details={f} />
+                        </span>
+                    ))
+                    setJsx(newJsx)
+                } else if (userList === 'followers') {
+                    const data = await Promise.all(
+                        profileDetails.followers.map((f) => getUserDetails(f)),
+                    )
+                    const newJsx = data.map((f) => (
+                        <span key={f.id}>
+                            <UserCard details={f} />
+                        </span>
+                    ))
+                    setJsx(newJsx)
+                }
+            }
+        })()
+    }, [profileDetails, userList])
 
     if (userList === 'following' || userList === 'followers') {
         return (
             <>
                 <LinkTabs links={linkTabsData} />
-                <div>
-                    {!loading && userList === 'following'
-                        ? followingJSX
-                        : followersJSX}
-                </div>
+                <div>{jsx}</div>
             </>
         )
     }
