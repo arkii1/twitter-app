@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import propTypes from 'prop-types'
@@ -43,16 +43,12 @@ function UserCard({ details }) {
         setProfileModal(false)
     }
 
-    useEffect(() => {
-        const init = async () => {
-            const newDetails = await details
-            setProfileDetails(newDetails)
-            const newFollowing =
-                userDetails.following.indexOf(newDetails.id) !== -1
-            setFollowing(newFollowing)
-        }
-        init()
-    }, [details, userDetails, profileDetails])
+    ;(async () => {
+        const newDetails = await details
+        setProfileDetails(newDetails)
+        const newFollowing = userDetails.following.indexOf(newDetails.id) !== -1
+        setFollowing(newFollowing)
+    })()
 
     return (
         profileDetails &&
