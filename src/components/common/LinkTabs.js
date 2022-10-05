@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import propTypes from 'prop-types'
+import uniqid from 'uniqid'
 
 import './styles.css'
 
@@ -12,6 +13,7 @@ function LinkTabs({ links }) {
         <div className="link-tabs d-flex w-100 justify-content-center align-items-start">
             {links.map((l) => (
                 <Link
+                    key={uniqid()}
                     className={` d-flex flex-column justify-content-between align-items-center gap-1 h-100 link-tabs__link${
                         l.link === path ? '--active' : ''
                     } react-link--none d-inline-flex flex-column justify-content-center`}
