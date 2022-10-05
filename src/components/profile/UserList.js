@@ -25,27 +25,21 @@ function UserList() {
     const [followingJSX, setFollowingJSX] = useState()
     const [followersJSX, setFollowersJSX] = useState()
 
-    useEffect(() => {
-        const init = async () => {
-            const details = await getUserDetailsFromUsername(username)
-            const followingData = await getTweetsFromUserArray(
-                details.following,
-            )
-            const followersData = await getTweetsFromUserArray(
-                details.followers,
-            )
-            const newFollowingJSX = followingData.map((f) => (
-                <UserCard details={f} />
-            ))
-            const newFollowersJSX = followersData.map((f) => (
-                <UserCard details={f} />
-            ))
-            setFollowingJSX(newFollowingJSX)
-            setFollowersJSX(newFollowersJSX)
-            setLoading(false)
-        }
-        init()
-    }, [username])
+    ;(async () => {
+        const details = await getUserDetailsFromUsername(username)
+        console.log(details)
+        const followingData = await getTweetsFromUserArray(details.following)
+        const followersData = await getTweetsFromUserArray(details.followers)
+        const newFollowingJSX = followingData.map((f) => (
+            <UserCard details={f} />
+        ))
+        const newFollowersJSX = followersData.map((f) => (
+            <UserCard details={f} />
+        ))
+        setFollowingJSX(newFollowingJSX)
+        setFollowersJSX(newFollowersJSX)
+        setLoading(false)
+    })()
 
     if (userList === 'following' || userList === 'followers') {
         return (
