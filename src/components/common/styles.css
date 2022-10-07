@@ -161,7 +161,7 @@
 }
 
 .tweet-card__comment,
-.tweet-card__retweet--not-retweeted,
+.tweet-card__retweet,
 .tweet-card__like--unliked,
 .tweet-card__share,
 .tweet-card__ellipsis {
@@ -185,11 +185,11 @@
     color: rgb(var(--green));
 }
 
-.tweet-card__retweet--not-retweeted:hover {
+.tweet-card__retweet-:hover {
     color: rgb(var(--green));
 }
 .tweet-card__retweet--retweeted:hover > button
-.tweet-card__retweet--not-retweeted:hover > button {
+.tweet-card__retweet:hover > button {
     background-color: rgba(var(--green), 0.1);
 }
 
