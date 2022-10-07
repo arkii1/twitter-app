@@ -166,7 +166,11 @@ function TweetCard({ tweet }) {
                                     {tweetDetails.replies.length}
                                 </span>
                             </span>
-                            <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">
+                            <span
+                                className={`tweet-card__retweet${
+                                    retweeted ? '--retweeted' : ''
+                                } d-flex justify-content-start align-items-center gap-1`}
+                            >
                                 <Button
                                     faLogo={faRetweet}
                                     size="1.1rem"
