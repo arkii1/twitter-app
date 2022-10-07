@@ -23,41 +23,42 @@ export function useDetails() {
 
 export function UserDetailsProvider({ children }) {
     const { currentUser } = useAuth()
-    const [loading, setLoading] = useState(true)
     const [userDetails, setUserDetails] = useState()
+    const [loading, setLoading] = useState(true)
 
     const updateUserDetailsContext = useCallback(
         async (details) => {
+            setLoading(true)
             if (userDetails) {
                 await updateUserDetails(currentUser.uid, details)
             } else await createUserDetails(currentUser.uid, details)
             const updatedDetails = await getUserDetails(currentUser.uid)
             setUserDetails(updatedDetails)
+            setLoading(false)
         },
         [currentUser, userDetails],
     )
+
+    useEffect(() => {
+        const initDetails = async () => {
+            setLoading(true)
+            const details = await getUserDetails(currentUser.uid)
+            setUserDetails(details)
+            setLoading(false)
+        }
+        if (currentUser) initDetails()
+    }, [currentUser])
 
     const value = useMemo(
         () => ({ userDetails, updateUserDetailsContext }),
         [userDetails, updateUserDetailsContext],
     )
-
-    useEffect(() => {
-        const init = async () => {
-            if (currentUser) {
-                const details = await getUserDetails(currentUser.uid)
-                console.log(details)
-                setUserDetails(details)
-            }
-            setLoading(false)
-        }
-        init()
-    }, [currentUser])
-
     return (
-        <UserDetailsContext.Provider value={value}>
-            {!loading && children}
-        </UserDetailsContext.Provider>
+        currentUser && (
+            <UserDetailsContext.Provider value={value}>
+                {!loading && children}
+            </UserDetailsContext.Provider>
+        )
     )
 }
 

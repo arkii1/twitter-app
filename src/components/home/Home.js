@@ -20,14 +20,16 @@ function Home() {
     useEffect(() => {
         const config = !userDetails
         setConfigureProfile(config)
-        ;(async () => {
-            if (!config) {
-                const arr = [...userDetails.following, userDetails.id]
-                const t = await getTweetsFromUserArray(arr, 0, tweetsLength)
-                setTweets(t)
-            }
-        })()
-    }, [userDetails, tweetsLength, configureProfile])
+    }, [userDetails])
+
+    useEffect(() => {
+        const updateTweets = async () => {
+            const arr = [...userDetails.following, userDetails.id]
+            const t = await getTweetsFromUserArray(arr, 0, tweetsLength)
+            if (t !== tweets) setTweets(t)
+        }
+        if (userDetails) updateTweets()
+    }, [tweetsLength, userDetails])
 
     return (
         <>

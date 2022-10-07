@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import propTypes from 'prop-types'
-import uniqid from 'uniqid'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
 import { follow, unfollow } from '../../utility/firestore/userDetailsFirestore'
@@ -43,20 +42,15 @@ function UserCard({ details }) {
         setProfileModal(false)
     }
 
-    useEffect(() => {
-        const init = async () => {
-            const newDetails = await details
-            setProfileDetails(newDetails)
-            const newFollowing =
-                userDetails.following.indexOf(newDetails.id) !== -1
-            setFollowing(newFollowing)
-        }
-        init()
-    }, [details, userDetails, profileDetails])
+    ;(async () => {
+        const newDetails = await details
+        setProfileDetails(newDetails)
+        const newFollowing = userDetails.following.indexOf(newDetails.id) !== -1
+        setFollowing(newFollowing)
+    })()
 
     return (
         profileDetails &&
-        profileDetails.id !== userDetails.id &&
         following !== null && (
             <>
                 {profileModal && (
@@ -69,7 +63,6 @@ function UserCard({ details }) {
                 )}
                 <li
                     className="user-card d-flex justify-content-between align-items-start w-100 px-2 py-3"
-                    key={uniqid()}
                     onMouseLeave={handleModalOff}
                 >
                     <div className="d-flex justify-content-start align-items-start gap-2">
@@ -105,13 +98,17 @@ function UserCard({ details }) {
                             <p>{profileDetails.bio}</p>
                         </span>
                     </div>
-                    <span style={{ width: '6rem' }}>
-                        <Button
-                            text={following ? 'Unfollow' : 'Follow'}
-                            colours={following ? 'light' : 'dark'}
-                            onClick={following ? handleUnfollow : handleFollow}
-                        />
-                    </span>
+                    {profileDetails.id !== userDetails.id && (
+                        <span style={{ width: '6rem' }}>
+                            <Button
+                                text={following ? 'Unfollow' : 'Follow'}
+                                colours={following ? 'light' : 'dark'}
+                                onClick={
+                                    following ? handleUnfollow : handleFollow
+                                }
+                            />
+                        </span>
+                    )}
                 </li>
             </>
         )

@@ -11,7 +11,12 @@ import {
 import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
-import { likeTweet, unlikeTweet } from '../../utility/firestore/tweetFirestore'
+import {
+    likeTweet,
+    retweet,
+    unRetweet,
+    unlikeTweet,
+} from '../../utility/firestore/tweetFirestore'
 import { getUserDetails } from '../../utility/firestore/userDetailsFirestore'
 import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
@@ -24,11 +29,12 @@ function TweetCard({ tweet }) {
     const nameRef = useRef()
     const imageRef = useRef()
 
-    const [tweetDetails, setTweetDetails] = useState(tweet)
+    const [tweetDetails, setTweetDetails] = useState(tweet.tweetData)
     const [tweetUserDetails, setTweetUserDetails] = useState(null)
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
     const [liked, setLiked] = useState(null)
+    const [retweeted, setRetweeted] = useState(tweet.retweetedUser)
 
     const handleModalOn = (ref) => {
         setProfileModal(true)
@@ -57,6 +63,17 @@ function TweetCard({ tweet }) {
         setLiked(like)
     }
 
+    const handleRetweet = async () => {
+        const r = !retweeted
+        if (r) {
+            await retweet(userDetails.id, tweetDetails.id)
+            setRetweeted(true)
+        } else {
+            await unRetweet(userDetails.id, tweetDetails.id)
+            setRetweeted(false)
+        }
+    }
+
     useEffect(() => {
         const init = async () => {
             const details = await getUserDetails(tweetDetails.userID)
@@ -68,12 +85,13 @@ function TweetCard({ tweet }) {
             }
 
             if (liked === null) {
-                const like = userDetails.liked.indexOf(tweetDetails.id) !== -1
+                const like =
+                    tweetDetails.likes.indexOf(tweetDetails.userID) !== -1
                 setLiked(like)
             }
         }
         init()
-    }, [liked, tweetDetails, userDetails])
+    }, [liked, tweet, userDetails, tweetDetails])
 
     return (
         tweetUserDetails !== null && (
@@ -129,7 +147,7 @@ function TweetCard({ tweet }) {
                                 />
                             </span>
                         </div>
-                        <span className="text mb-1">{tweet.text}</span>
+                        <span className="text mb-1">{tweetDetails.text}</span>
                         <div className="d-flex justify-content-between w-75">
                             <span className="tweet-card__comment d-flex justify-content-start align-items-center gap-1">
                                 <Button
@@ -145,15 +163,20 @@ function TweetCard({ tweet }) {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    {tweetDetails.repliesArr.length}
+                                    {tweetDetails.replies.length}
                                 </span>
                             </span>
-                            <span className="tweet-card__retweet d-flex justify-content-start align-items-center gap-1">
+                            <span
+                                className={`tweet-card__retweet${
+                                    retweeted ? '--retweeted' : ''
+                                } d-flex justify-content-start align-items-center gap-1`}
+                            >
                                 <Button
                                     faLogo={faRetweet}
                                     size="1.1rem"
                                     padding="2"
                                     colours="inherit"
+                                    onClick={handleRetweet}
                                 />
                                 <span
                                     style={{

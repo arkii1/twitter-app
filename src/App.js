@@ -22,7 +22,7 @@ function App() {
                     <Routes>
                         <Route
                             index
-                            element={<Navigate to="/modal/sign-in" />}
+                            element={<Navigate to="modal/sign-in" />}
                         />
                         <Route path="modal" element={<Modal />}>
                             <Route index path="sign-in" element={<SignIn />} />
