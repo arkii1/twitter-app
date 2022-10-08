@@ -78,20 +78,15 @@ function TweetCard({ tweet }) {
         const init = async () => {
             const details = await getUserDetails(tweetDetails.userID)
             setTweetUserDetails(details)
-
+            const like = userDetails.likedTweets.indexOf(tweetDetails.id) !== -1
+            setLiked(like)
             if (imageRef.current) {
                 const { x, y } = imageRef.current.getBoundingClientRect()
                 setModalPos([x, y])
             }
-
-            if (liked === null) {
-                const like =
-                    tweetDetails.likes.indexOf(tweetDetails.userID) !== -1
-                setLiked(like)
-            }
         }
         init()
-    }, [liked, tweet, userDetails, tweetDetails])
+    }, [])
 
     return (
         tweetUserDetails !== null && (
