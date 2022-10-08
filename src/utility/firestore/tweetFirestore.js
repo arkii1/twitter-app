@@ -145,12 +145,17 @@ export async function unlikeTweet(userID, tweetID) {
 
 export async function retweet(userID, tweetID) {
     const userDetails = await getUserDetails(userID)
-    userDetails.tweets.push({
-        tweetID,
-        retweetedUser: userID,
-    })
+    const tweet = userDetails.tweets.find((t) => t.tweetID === tweetID)
+    if (tweet) {
+        const i = userDetails.tweet.indexOf(tweet)
+        userDetails.tweet[i].retweetedUser = userID
+    } else {
+        userDetails.tweets.push({
+            tweetID,
+            retweetedUser: userID,
+        })
+    }
     await updateUserDetails(userDetails.id, userDetails)
-
     const tweetDetails = await getTweet(tweetID)
     tweetDetails.retweets.push(userID)
     await updateTweet(tweetID, tweetDetails)
