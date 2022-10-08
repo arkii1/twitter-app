@@ -34,7 +34,9 @@ function TweetCard({ tweet }) {
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
     const [liked, setLiked] = useState(null)
-    const [retweeted, setRetweeted] = useState(!!tweet.retweetedUser)
+    const [retweeted, setRetweeted] = useState(
+        tweet.tweetData.retweets.indexOf(userDetails.id) !== -1,
+    )
 
     const handleModalOn = (ref) => {
         setProfileModal(true)
