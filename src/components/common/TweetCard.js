@@ -34,7 +34,7 @@ function TweetCard({ tweet }) {
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
     const [liked, setLiked] = useState(null)
-    const [retweeted, setRetweeted] = useState(
+    const [retweetedByUser, setRetweetedByUser] = useState(
         tweet.tweetData.retweets.indexOf(userDetails.id) !== -1,
     )
 
@@ -66,13 +66,13 @@ function TweetCard({ tweet }) {
     }
 
     const handleRetweet = async () => {
-        const r = !retweeted
+        const r = !retweetedByUser
         if (r) {
             await retweet(userDetails.id, tweetDetails.id)
-            setRetweeted(true)
+            setRetweetedByUser(true)
         } else {
             await unRetweet(userDetails.id, tweetDetails.id)
-            setRetweeted(false)
+            setRetweetedByUser(false)
         }
     }
 
@@ -165,7 +165,7 @@ function TweetCard({ tweet }) {
                             </span>
                             <span
                                 className={`tweet-card__retweet${
-                                    retweeted ? '--retweeted' : ''
+                                    retweetedByUser ? '--retweeted' : ''
                                 } d-flex justify-content-start align-items-center gap-1`}
                             >
                                 <Button
