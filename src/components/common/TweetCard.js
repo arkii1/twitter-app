@@ -34,7 +34,9 @@ function TweetCard({ tweet }) {
     const [profileModal, setProfileModal] = useState(false)
     const [modalPos, setModalPos] = useState([0, 0])
     const [liked, setLiked] = useState(null)
-    const [retweeted, setRetweeted] = useState(tweet.retweetedUser)
+    const [retweetedByUser, setRetweetedByUser] = useState(
+        tweet.tweetData.retweets.indexOf(userDetails.id) !== -1,
+    )
 
     const handleModalOn = (ref) => {
         setProfileModal(true)
@@ -64,13 +66,13 @@ function TweetCard({ tweet }) {
     }
 
     const handleRetweet = async () => {
-        const r = !retweeted
+        const r = !retweetedByUser
         if (r) {
             await retweet(userDetails.id, tweetDetails.id)
-            setRetweeted(true)
+            setRetweetedByUser(true)
         } else {
             await unRetweet(userDetails.id, tweetDetails.id)
-            setRetweeted(false)
+            setRetweetedByUser(false)
         }
     }
 
@@ -78,20 +80,15 @@ function TweetCard({ tweet }) {
         const init = async () => {
             const details = await getUserDetails(tweetDetails.userID)
             setTweetUserDetails(details)
-
+            const like = userDetails.likedTweets.indexOf(tweetDetails.id) !== -1
+            setLiked(like)
             if (imageRef.current) {
                 const { x, y } = imageRef.current.getBoundingClientRect()
                 setModalPos([x, y])
             }
-
-            if (liked === null) {
-                const like =
-                    tweetDetails.likes.indexOf(tweetDetails.userID) !== -1
-                setLiked(like)
-            }
         }
         init()
-    }, [liked, tweet, userDetails, tweetDetails])
+    }, [])
 
     return (
         tweetUserDetails !== null && (
@@ -168,7 +165,7 @@ function TweetCard({ tweet }) {
                             </span>
                             <span
                                 className={`tweet-card__retweet${
-                                    retweeted ? '--retweeted' : ''
+                                    retweetedByUser ? '--retweeted' : ''
                                 } d-flex justify-content-start align-items-center gap-1`}
                             >
                                 <Button

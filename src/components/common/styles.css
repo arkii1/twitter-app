@@ -185,10 +185,10 @@
     color: rgb(var(--green));
 }
 
-.tweet-card__retweet-:hover {
+.tweet-card__retweet:hover {
     color: rgb(var(--green));
 }
-.tweet-card__retweet--retweeted:hover > button
+.tweet-card__retweet--retweeted:hover > button,
 .tweet-card__retweet:hover > button {
     background-color: rgba(var(--green), 0.1);
 }
