@@ -87,7 +87,6 @@ export function getTweetsFromUserArray(followingArr, start, length) {
         const tweetArr = []
         followingData.forEach((following) => {
             following.tweets.forEach((t) => {
-                console.log(t)
                 if (!tweetArr.find((curT) => curT.tweetID === t.tweetID))
                     tweetArr.push(t)
             })
