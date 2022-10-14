@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import {
     getUserDetails,
@@ -25,10 +25,12 @@ function Community() {
     const [userArray, setUserArray] = useState()
     const [profileDetails, setProfileDetails] = useState()
 
-    ;(async () => {
-        const details = await getUserDetailsFromUsername(username)
-        setProfileDetails(details)
-    })()
+    useEffect(() => {
+        ;(async () => {
+            const details = await getUserDetailsFromUsername(username)
+            setProfileDetails(details)
+        })()
+    }, [])
 
     useEffect(() => {
         if (!profileDetails) return
@@ -47,16 +49,14 @@ function Community() {
         })()
     }, [profileDetails, userList])
 
-    if (userList === 'following' || userList === 'followers') {
-        return (
+    return (
+        (userList === 'following' || userList === 'followers') && (
             <>
                 <LinkTabs links={linkTabsData} />
-                <UserList users={userArray} />
+                {userArray && <UserList users={userArray} />}
             </>
         )
-    }
-
-    return <Navigate to={`/app/${username}`} />
+    )
 }
 
 export default Community
