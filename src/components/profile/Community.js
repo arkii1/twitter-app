@@ -6,10 +6,10 @@ import {
     getUserDetailsFromUsername,
 } from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
-import UserCard from './UserCard'
+import UserCard from '../common/UserCard'
 import './styles.css'
 
-function UserList() {
+function Community() {
     const { id: username, userList } = useParams()
 
     const linkTabsData = [
@@ -75,4 +75,4 @@ function UserList() {
     return <Navigate to={`/app/${username}`} />
 }
 
-export default UserList
+export default Community
