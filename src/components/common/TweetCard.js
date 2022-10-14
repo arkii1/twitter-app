@@ -18,9 +18,9 @@ import {
     unlikeTweet,
 } from '../../utility/firestore/tweetFirestore'
 import { getUserDetails } from '../../utility/firestore/userDetailsFirestore'
-import ProfileModal from '../profile/ProfileModal'
 import Button from './Button'
 import ImageContainer from './ImageContainer'
+import ProfileModal from './ProfileModal'
 import './styles.css'
 
 function TweetCard({ tweet }) {

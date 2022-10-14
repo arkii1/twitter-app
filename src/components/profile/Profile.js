@@ -16,11 +16,11 @@ import {
     unfollow,
 } from '../../utility/firestore/userDetailsFirestore'
 import Button from '../common/Button'
+import FollowingFollowersLinks from '../common/FollowingFollowersLinks'
 import ImageContainer from '../common/ImageContainer'
 import LinkTabs from '../common/LinkTabs'
 import TweetList from '../common/TweetList'
 import ConfigureProfile from './ConfigureProfile'
-import FollowingFollowersLinks from './FollowingFollowersLinks'
 import './styles.css'
 
 function Profile() {

@@ -7,8 +7,8 @@ import AppLayout from './components/layout/AppLayout'
 import Modal from './components/layout/Modal'
 import SignIn from './components/login/SignIn'
 import SignUp from './components/login/SignUp'
+import Community from './components/profile/Community'
 import Profile from './components/profile/Profile'
-import UserList from './components/profile/UserList'
 import Logout from './components/utility/Logout'
 import { AuthProvider } from './contexts/AuthContext'
 import { UserDetailsProvider } from './contexts/UserDetailsContext'
@@ -37,7 +37,7 @@ function App() {
                                 <Route path=":id" element={<Profile />} />
                                 <Route
                                     path=":id/community/:userList"
-                                    element={<UserList />}
+                                    element={<Community />}
                                 />
                             </Route>
                         </Routes>
