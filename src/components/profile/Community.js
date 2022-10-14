@@ -6,12 +6,11 @@ import {
     getUserDetailsFromUsername,
 } from '../../utility/firestore/userDetailsFirestore'
 import LinkTabs from '../common/LinkTabs'
-import UserCard from '../common/UserCard'
+import UserList from '../common/UserList'
 import './styles.css'
 
 function Community() {
     const { id: username, userList } = useParams()
-
     const linkTabsData = [
         {
             link: `/app/${username}/community/following`,
@@ -23,42 +22,27 @@ function Community() {
         },
     ]
 
-    const [jsx, setJsx] = useState()
+    const [userArray, setUserArray] = useState()
     const [profileDetails, setProfileDetails] = useState()
 
-    useEffect(() => {
-        ;(async () => {
-            const details = await getUserDetailsFromUsername(username)
-            setProfileDetails(details)
-        })()
-    }, [username])
+    ;(async () => {
+        const details = await getUserDetailsFromUsername(username)
+        setProfileDetails(details)
+    })()
 
     useEffect(() => {
         if (!profileDetails) return
         ;(async () => {
-            if (userList === 'following' || userList === 'followers') {
-                if (userList === 'following') {
-                    console.log(profileDetails)
-                    const data = await Promise.all(
-                        profileDetails.following.map((f) => getUserDetails(f)),
-                    )
-                    const newJsx = data.map((f) => (
-                        <span key={f.id}>
-                            <UserCard details={f} />
-                        </span>
-                    ))
-                    setJsx(newJsx)
-                } else if (userList === 'followers') {
-                    const data = await Promise.all(
-                        profileDetails.followers.map((f) => getUserDetails(f)),
-                    )
-                    const newJsx = data.map((f) => (
-                        <span key={f.id}>
-                            <UserCard details={f} />
-                        </span>
-                    ))
-                    setJsx(newJsx)
-                }
+            if (userList === 'following') {
+                const data = await Promise.all(
+                    profileDetails.following.map((f) => getUserDetails(f)),
+                )
+                setUserArray(data)
+            } else if (userList === 'followers') {
+                const data = await Promise.all(
+                    profileDetails.followers.map((f) => getUserDetails(f)),
+                )
+                setUserArray(data)
             }
         })()
     }, [profileDetails, userList])
@@ -67,7 +51,7 @@ function Community() {
         return (
             <>
                 <LinkTabs links={linkTabsData} />
-                <div>{jsx}</div>
+                <UserList users={userArray} />
             </>
         )
     }
