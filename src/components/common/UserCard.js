@@ -5,8 +5,8 @@ import propTypes from 'prop-types'
 
 import { useDetails } from '../../contexts/UserDetailsContext'
 import { follow, unfollow } from '../../utility/firestore/userDetailsFirestore'
-import Button from '../common/Button'
-import ImageContainer from '../common/ImageContainer'
+import Button from './Button'
+import ImageContainer from './ImageContainer'
 import ProfileModal from './ProfileModal'
 import './styles.css'
 
