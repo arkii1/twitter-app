@@ -5,10 +5,10 @@ import propTypes from 'prop-types'
 import UserCard from './UserCard'
 import './styles.css'
 
-function UserList({ children }) {
+function UserList({ users }) {
     return (
         <div>
-            {children.map((c) => (
+            {users.map((c) => (
                 <span key={c.id}>
                     <UserCard details={c} />
                 </span>
@@ -20,5 +20,5 @@ function UserList({ children }) {
 export default UserList
 
 UserList.propTypes = {
-    children: propTypes.arrayOf(propTypes.object),
+    users: propTypes.arrayOf(propTypes.object),
 }
