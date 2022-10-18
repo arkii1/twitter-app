@@ -16,13 +16,15 @@ function CreateTweet() {
     const textInputRef = useRef()
     const fileInputRef = useRef()
 
-    const [src, setSrc] = useState('')
+    const [attachments, setAttachments] = useState([])
     const [percentage, setPercentage] = useState(0)
     const [progressText, setProgressText] = useState(null)
 
     const handleImageOnChange = () => {
-        const newSrc = URL.createObjectURL(fileInputRef.current.files[0])
-        setSrc(newSrc)
+        const newSrc = URL.createObjectURL(
+            fileInputRef.current.files[fileInputRef.current.files.length - 1],
+        )
+        setAttachments([...attachments, newSrc])
     }
 
     const handleImageClick = () => {
@@ -30,12 +32,12 @@ function CreateTweet() {
     }
 
     const removeImage = () => {
-        setSrc('')
+        setAttachments('')
     }
 
     const handleCreateTweet = () => {
         const text = textInputRef.current.value
-        createTweet(userDetails.id, null, text, src)
+        createTweet(userDetails.id, null, text, attachments)
     }
 
     const handleChange = () => {
@@ -62,10 +64,10 @@ function CreateTweet() {
                         maxRows={20}
                         onChange={handleChange}
                     />
-                    {src !== '' && (
+                    {attachments.map((a) => (
                         <div className="w-100 position-relative d-flex justify-content-center">
                             <ImageContainer
-                                src={src}
+                                src={a}
                                 alt=""
                                 type="create-tweet"
                             />
@@ -80,7 +82,7 @@ function CreateTweet() {
                                 />
                             </span>
                         </div>
-                    )}
+                    ))}
                     <span className="break-line" />
                     <span className="create-tweet__bottom d-flex gap-1 justify-content-between">
                         <span className="d-flex justify-content-start gap-1 flex-grow-1">
