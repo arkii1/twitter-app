@@ -164,6 +164,13 @@ function TweetCard({ tweet }) {
                             <span className="text mb-1">
                                 {tweetDetails.text}
                             </span>
+                            {tweetDetails.attachments.map((a) => (
+                                <ImageContainer
+                                    src={a}
+                                    alt=""
+                                    type="create-tweet"
+                                />
+                            ))}
                             <div className="d-flex justify-content-between w-75">
                                 <span className="tweet-card__comment d-flex justify-content-start align-items-center gap-1">
                                     <Button
