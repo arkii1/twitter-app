@@ -13,12 +13,12 @@
     width: 100vw;
     position: fixed;
     left: 0;
+    top: 0;
     z-index: 999;
 }
 
 .my-modal__content {
     position: absolute;
-    height: min(35rem, 80vh);
     width: min(33rem, 75vw);
     background-color: white;
     margin-top: 24vh;
