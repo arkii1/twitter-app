@@ -7,10 +7,10 @@ import './styles.css'
 
 function Modal({ children }) {
     return (
-        <div className="my-modal ">
+        <div className="my-modal">
             <div
                 className="rounded my-modal__content d-flex flex-column justify-content-start align-items-center"
-                style={{ overflowY: 'scroll', overflowX: 'hidden' }}
+                style={{ overflowY: 'auto', overflowX: 'auto', top: '0' }}
             >
                 {!children && <Outlet />}
                 {children && children}
